@@ -1,0 +1,147 @@
+function MenuIcon() {
+  return (
+    <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden>
+      <rect y="0" width="18" height="2" rx="1" fill="#e5b800" />
+      <rect y="6" width="18" height="2" rx="1" fill="#e5b800" />
+      <rect y="12" width="18" height="2" rx="1" fill="#e5b800" />
+    </svg>
+  );
+}
+
+function SportsIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>
+      <circle cx="11" cy="11" r="10" fill="#2a1f4e" stroke="#7b5ea7" strokeWidth="1" />
+      <path
+        d="M11 4l1.8 3.6 4 .6-2.9 2.8.7 4L11 13.4 7.4 15l.7-4L5.2 8.2l4-.6L11 4z"
+        fill="#d4a843"
+      />
+      <path d="M7 11h8M11 7v8" stroke="#9b7fd4" strokeWidth="0.8" />
+    </svg>
+  );
+}
+
+function SlotIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>
+      <rect x="2" y="4" width="18" height="14" rx="3" fill="#1a5c38" />
+      <rect x="4" y="6" width="4.5" height="10" rx="1" fill="#f5c518" />
+      <rect x="8.75" y="6" width="4.5" height="10" rx="1" fill="#f5c518" />
+      <rect x="13.5" y="6" width="4.5" height="10" rx="1" fill="#f5c518" />
+      <text x="5.2" y="13.5" fill="#1a5c38" fontSize="6" fontWeight="bold">
+        7
+      </text>
+      <text x="9.95" y="13.5" fill="#1a5c38" fontSize="6" fontWeight="bold">
+        7
+      </text>
+      <text x="14.7" y="13.5" fill="#1a5c38" fontSize="6" fontWeight="bold">
+        7
+      </text>
+    </svg>
+  );
+}
+
+function CasinoIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>
+      <path
+        d="M11 3l8.5 4.5v7L11 19 2.5 14.5v-7L11 3z"
+        fill="#1a8a54"
+        stroke="#2cb86e"
+        strokeWidth="0.8"
+      />
+      <path
+        d="M11 7.5c-2.2 0-3.8 1.4-3.8 3.1 0 1.2 1.8 2.8 3.8 4.6 2-1.8 3.8-3.4 3.8-4.6 0-1.7-1.6-3.1-3.8-3.1z"
+        fill="#0d4a2e"
+      />
+      <path d="M9.2 15.8h3.6v1.4H9.2z" fill="#0d4a2e" />
+    </svg>
+  );
+}
+
+function BangladeshFlag() {
+  return (
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden>
+      <circle cx="14" cy="14" r="14" fill="#006a4e" />
+      <circle cx="15.5" cy="14" r="8" fill="#f42a41" />
+    </svg>
+  );
+}
+
+function NavLink({
+  icon,
+  label,
+}: {
+  icon: React.ReactNode;
+  label: string;
+}) {
+  return (
+    <a
+      href="#"
+      className="flex items-center gap-1.5 rounded-md px-2 py-1.5 text-[13px] text-[#d4d4d4] transition-colors hover:text-white"
+    >
+      {icon}
+      {label ? <span>{label}</span> : null}
+    </a>
+  );
+}
+
+export default function TopNavbar({
+  onMenuClick,
+  menuOpen,
+}: {
+  onMenuClick: () => void;
+  menuOpen?: boolean;
+}) {
+  return (
+    <header className="sticky top-0 z-50 w-full border-b border-[#2a2a2a] bg-[#121212]">
+      <nav className="flex h-[52px] w-full items-center justify-between px-3 sm:px-4 lg:px-6">
+        <div className="flex items-center gap-3 lg:gap-4">
+          <button
+            type="button"
+            aria-label="Open menu"
+            onClick={onMenuClick}
+            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-md transition-colors ${
+              menuOpen ? "bg-[#333333]" : "bg-[#2a2a2a] hover:bg-[#333333]"
+            }`}
+          >
+            <MenuIcon />
+          </button>
+
+          <a href="/" className="flex shrink-0 items-center text-[22px] font-bold tracking-tight">
+            <span className="text-white">ba</span>
+            <span className="text-[#ed1c24]">ji</span>
+          </a>
+
+          <div className="hidden items-center gap-1 md:flex">
+            <NavLink icon={<SportsIcon />} label="" />
+            <NavLink icon={<SlotIcon />} label="স্লট" />
+            <NavLink icon={<CasinoIcon />} label="ক্যাসিনো" />
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 lg:gap-3">
+          <button
+            type="button"
+            className="h-8 rounded-md border border-[#555555] px-4 text-[13px] font-medium text-white transition-colors hover:border-[#777777] hover:bg-white/5"
+          >
+            লগইন
+          </button>
+          <button
+            type="button"
+            className="h-8 rounded-md bg-[#178358] px-4 text-[13px] font-medium text-white transition-colors hover:bg-[#1a9664]"
+          >
+            সাইন আপ
+          </button>
+          <button
+            type="button"
+            aria-label="Change language"
+            className="ml-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-opacity hover:opacity-80"
+          >
+            <BangladeshFlag />
+          </button>
+        </div>
+      </nav>
+    </header>
+  );
+}

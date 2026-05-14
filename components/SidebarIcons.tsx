@@ -237,9 +237,17 @@ export function CrownIcon() {
   );
 }
 
-export function SubItemIcon({ label, accent }: { label: string; accent?: string }) {
+export function SubItemIcon({
+  id,
+  label,
+  accent,
+}: {
+  id?: string;
+  label: string;
+  accent?: string;
+}) {
   const color = accent ?? "#d4a843";
-  const initials = label === "অল" ? "★" : label.slice(0, 2).toUpperCase();
+  const initials = id === "all" ? "★" : label.slice(0, 2).toUpperCase();
 
   return (
     <span
@@ -248,6 +256,101 @@ export function SubItemIcon({ label, accent }: { label: string; accent?: string 
     >
       {initials}
     </span>
+  );
+}
+
+export function ReferralIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>
+      <circle cx="11" cy="7" r="3" stroke="white" strokeWidth="1.5" />
+      <path
+        d="M5.5 17c.4-2.5 2.4-4 5.5-4s5.1 1.5 5.5 4"
+        stroke="white"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <circle cx="17.5" cy="6.5" r="2" stroke="white" strokeWidth="1.2" />
+      <circle cx="4.5" cy="6.5" r="2" stroke="white" strokeWidth="1.2" />
+    </svg>
+  );
+}
+
+export function AffiliateIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>
+      <circle cx="11" cy="5" r="2.5" stroke="white" strokeWidth="1.5" />
+      <circle cx="5.5" cy="16" r="2.5" stroke="white" strokeWidth="1.5" />
+      <circle cx="16.5" cy="16" r="2.5" stroke="white" strokeWidth="1.5" />
+      <path d="M9.5 7.5L7 13.5M12.5 7.5l2.5 6M7.8 14.5h6.4" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function AmbassadorIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>
+      <path
+        d="M11 3.5l1.8 3.6 4 .6-2.9 2.8.7 4-3.6-1.9-3.6 1.9.7-4L5.2 7.7l4-.6L11 3.5z"
+        stroke="white"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <circle cx="11" cy="16.5" r="2.5" stroke="white" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
+export function DownloadIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>
+      <path d="M11 4v9M7.5 9.5L11 13l3.5-3.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M5 16h12" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function ContactIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>
+      <path
+        d="M6.5 5.5h9a2 2 0 012 2v7a2 2 0 01-2 2h-9l-3 2.5V7.5a2 2 0 012-2z"
+        stroke="white"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function GuideIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>
+      <path d="M5 5.5h12v11H5V5.5z" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
+      <path d="M8 9h6M8 12h4" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function ForumIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>
+      <path
+        d="M5 6.5h12a1.5 1.5 0 011.5 1.5v5a1.5 1.5 0 01-1.5 1.5H10l-3.5 2.5V14H5a1.5 1.5 0 01-1.5-1.5V8A1.5 1.5 0 015 6.5z"
+        stroke="white"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <path d="M8 10h6M8 12.5h3.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function ExternalLinkIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden className="text-[#a8a8a8]">
+      <path d="M4.5 2.5H9v4.5M9 2.5L3 8.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M2.5 4.5v5h5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }
 
@@ -271,6 +374,24 @@ export function menuIconFor(id: string) {
       return <ArcadeIcon />;
     case "lottery":
       return <LotteryIcon />;
+    case "promotions":
+      return <GiftIcon />;
+    case "vipClub":
+      return <CrownIcon />;
+    case "referral":
+      return <ReferralIcon />;
+    case "affiliate":
+      return <AffiliateIcon />;
+    case "brandAmbassadors":
+      return <AmbassadorIcon />;
+    case "appDownload":
+      return <DownloadIcon />;
+    case "contactUs":
+      return <ContactIcon />;
+    case "newMemberGuide":
+      return <GuideIcon />;
+    case "bjForum":
+      return <ForumIcon />;
     default:
       return <ExclusiveIcon />;
   }

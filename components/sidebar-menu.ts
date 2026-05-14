@@ -1,94 +1,124 @@
 export type SidebarSubItem = {
   id: string;
-  label: string;
   accent?: string;
 };
 
 export type SidebarMenuItem = {
   id: string;
-  label: string;
+  kind?: "link" | "dropdown" | "external";
+  showViewAll?: boolean;
   subItems?: SidebarSubItem[];
 };
 
-export const sidebarMenuItems: SidebarMenuItem[] = [
-  { id: "exclusive", label: "এক্সক্লুসিভ গেমগুলো" },
+export const sidebarPrimaryItems: SidebarMenuItem[] = [
+  { id: "exclusive", kind: "link" },
   {
     id: "sports",
-    label: "স্পোর্ট",
+    kind: "dropdown",
     subItems: [
-      { id: "all", label: "অল" },
-      { id: "cricket", label: "ক্রিকেট" },
-      { id: "football", label: "ফুটবল" },
-      { id: "tennis", label: "টেনিস" },
+      { id: "all" },
+      { id: "cricket" },
+      { id: "football" },
+      { id: "tennis" },
     ],
   },
   {
     id: "casino",
-    label: "ক্যাসিনো",
+    kind: "dropdown",
     subItems: [
-      { id: "all", label: "অল" },
-      { id: "evolution", label: "Evolution" },
-      { id: "pragmatic", label: "Pragmatic Play" },
-      { id: "sexy", label: "Sexy Gaming" },
+      { id: "all" },
+      { id: "evolution" },
+      { id: "pragmatic" },
+      { id: "sexy" },
     ],
   },
   {
     id: "slots",
-    label: "স্লট",
+    kind: "dropdown",
     subItems: [
-      { id: "all", label: "অল" },
-      { id: "jdb", label: "JDB" },
-      { id: "pg", label: "PG Soft" },
-      { id: "jili", label: "JILI" },
+      { id: "all" },
+      { id: "jdb" },
+      { id: "pg" },
+      { id: "jili" },
     ],
   },
   {
     id: "crash",
-    label: "ক্রাশ",
+    kind: "dropdown",
     subItems: [
-      { id: "all", label: "অল" },
-      { id: "aviator", label: "Aviator" },
-      { id: "spribe", label: "Spribe" },
+      { id: "all" },
+      { id: "aviator" },
+      { id: "spribe" },
     ],
   },
   {
     id: "table",
-    label: "টেবিল",
+    kind: "dropdown",
     subItems: [
-      { id: "all", label: "অল" },
-      { id: "baccarat", label: "Baccarat" },
-      { id: "roulette", label: "Roulette" },
+      { id: "all" },
+      { id: "baccarat" },
+      { id: "roulette" },
     ],
   },
   {
     id: "fishing",
-    label: "ফিশিং",
+    kind: "dropdown",
     subItems: [
-      { id: "all", label: "অল" },
-      { id: "jdb", label: "JDB" },
-      { id: "jili", label: "JILI" },
+      { id: "all" },
+      { id: "jdb" },
+      { id: "jili" },
     ],
   },
   {
     id: "arcade",
-    label: "আর্কেড",
+    kind: "dropdown",
     subItems: [
-      { id: "all", label: "অল" },
-      { id: "jdb", label: "JDB", accent: "#f5a623" },
-      { id: "fachai", label: "Fa Chai", accent: "#3b82f6" },
-      { id: "pragmatic", label: "Pragmatic Play", accent: "#f97316" },
-      { id: "rich88", label: "Rich88", accent: "#a855f7" },
-      { id: "youlian", label: "You Lian", accent: "#38bdf8" },
-      { id: "hacksaw", label: "Hacksaw", accent: "#e5e7eb" },
+      { id: "all" },
+      { id: "jdb", accent: "#f5a623" },
+      { id: "fachai", accent: "#3b82f6" },
+      { id: "pragmatic", accent: "#f97316" },
+      { id: "rich88", accent: "#a855f7" },
+      { id: "youlian", accent: "#38bdf8" },
+      { id: "hacksaw", accent: "#e5e7eb" },
     ],
   },
   {
     id: "lottery",
-    label: "লটারি",
+    kind: "dropdown",
     subItems: [
-      { id: "all", label: "অল" },
-      { id: "tc", label: "TC Gaming" },
-      { id: "king", label: "King Midas" },
+      { id: "all" },
+      { id: "tc" },
+      { id: "king" },
     ],
   },
+  {
+    id: "promotions",
+    kind: "dropdown",
+    showViewAll: true,
+    subItems: [
+      { id: "all" },
+      { id: "welcome" },
+      { id: "cashback" },
+    ],
+  },
+];
+
+export const sidebarSecondaryItems: SidebarMenuItem[] = [
+  { id: "vipClub", kind: "link" },
+  { id: "referral", kind: "link" },
+  { id: "affiliate", kind: "external" },
+  { id: "brandAmbassadors", kind: "link" },
+  { id: "appDownload", kind: "link" },
+  {
+    id: "contactUs",
+    kind: "dropdown",
+    subItems: [{ id: "liveChat" }, { id: "email" }, { id: "telegram" }],
+  },
+  { id: "newMemberGuide", kind: "external" },
+  { id: "bjForum", kind: "external" },
+];
+
+export const sidebarMenuItems: SidebarMenuItem[] = [
+  ...sidebarPrimaryItems,
+  ...sidebarSecondaryItems,
 ];

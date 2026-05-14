@@ -1,3 +1,8 @@
+"use client";
+
+import LocaleMenuButton from "./LocaleMenuButton";
+import { useLocale } from "./LocaleProvider";
+
 function MenuIcon() {
   return (
     <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden>
@@ -59,15 +64,6 @@ function CasinoIcon() {
   );
 }
 
-function BangladeshFlag() {
-  return (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden>
-      <circle cx="14" cy="14" r="14" fill="#006a4e" />
-      <circle cx="15.5" cy="14" r="8" fill="#f42a41" />
-    </svg>
-  );
-}
-
 function NavLink({
   icon,
   label,
@@ -93,13 +89,15 @@ export default function TopNavbar({
   onMenuClick: () => void;
   menuOpen?: boolean;
 }) {
+  const { preferences, t } = useLocale();
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#2a2a2a] bg-[#121212]">
+    <header className="sticky top-0 z-50 w-full shrink-0 border-b border-[#2a2a2a] bg-[#121212]">
       <nav className="flex h-[52px] w-full items-center justify-between px-3 sm:px-4 lg:px-6">
         <div className="flex items-center gap-3 lg:gap-4">
           <button
             type="button"
-            aria-label="Open menu"
+            aria-label={t.ui.openMenu}
             onClick={onMenuClick}
             className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-md transition-colors ${
               menuOpen ? "bg-[#333333]" : "bg-[#2a2a2a] hover:bg-[#333333]"
@@ -108,38 +106,35 @@ export default function TopNavbar({
             <MenuIcon />
           </button>
 
-          <a href="/" className="flex shrink-0 items-center text-[22px] font-bold tracking-tight">
+          <a
+            href={`/${preferences.locale}`}
+            className="flex shrink-0 items-center text-[22px] font-bold tracking-tight"
+          >
             <span className="text-white">ba</span>
             <span className="text-[#ed1c24]">ji</span>
           </a>
 
           <div className="hidden items-center gap-1 md:flex">
-            <NavLink icon={<SportsIcon />} label="" />
-            <NavLink icon={<SlotIcon />} label="স্লট" />
-            <NavLink icon={<CasinoIcon />} label="ক্যাসিনো" />
+            <NavLink icon={<SportsIcon />} label={t.sidebar.sports} />
+            <NavLink icon={<SlotIcon />} label={t.slots} />
+            <NavLink icon={<CasinoIcon />} label={t.casino} />
           </div>
         </div>
 
         <div className="flex items-center gap-2 lg:gap-3">
           <button
             type="button"
-            className="h-8 rounded-md border border-[#555555] px-4 text-[13px] font-medium text-white transition-colors hover:border-[#777777] hover:bg-white/5"
+            className="h-8 rounded-md border border-[#555555] px-2.5 text-[12px] font-medium text-white transition-colors hover:border-[#777777] hover:bg-white/5 sm:px-4 sm:text-[13px]"
           >
-            লগইন
+            {t.login}
           </button>
           <button
             type="button"
-            className="h-8 rounded-md bg-[#178358] px-4 text-[13px] font-medium text-white transition-colors hover:bg-[#1a9664]"
+            className="h-8 rounded-md bg-[#178358] px-2.5 text-[12px] font-medium text-white transition-colors hover:bg-[#1a9664] sm:px-4 sm:text-[13px]"
           >
-            সাইন আপ
+            {t.signUp}
           </button>
-          <button
-            type="button"
-            aria-label="Change language"
-            className="ml-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-opacity hover:opacity-80"
-          >
-            <BangladeshFlag />
-          </button>
+          <LocaleMenuButton />
         </div>
       </nav>
     </header>

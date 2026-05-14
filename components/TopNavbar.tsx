@@ -110,8 +110,8 @@ export default function TopNavbar({
             href={`/${preferences.locale}`}
             className="flex shrink-0 items-center text-[22px] font-bold tracking-tight"
           >
-            <span className="text-white">ba</span>
-            <span className="text-[#ed1c24]">ji</span>
+            <span className="text-white">MNS</span>
+            <span className="text-[#ed1c24]">Baji</span>
           </a>
 
           <div className="hidden items-center gap-1 md:flex">

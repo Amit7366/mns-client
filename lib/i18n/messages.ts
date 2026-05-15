@@ -36,6 +36,7 @@ export type Messages = {
     changeLocale: string;
     previousProviders: string;
     nextProviders: string;
+    backHome: string;
   };
   sidebar: Record<string, string>;
   sub: Record<string, string>;
@@ -49,6 +50,45 @@ export type Messages = {
     tabs: Record<string, string>;
     games: Record<string, string>;
     providers: Record<string, string>;
+  };
+  lobby: {
+    searchPlaceholder: string;
+    filter: string;
+    sort: string;
+    pickCategory: string;
+    pickSort: string;
+    sortRecommend: string;
+    sortAZ: string;
+    sortZA: string;
+    sortNewOld: string;
+    sortOldNew: string;
+    filterPanelTitle: string;
+    filterProviders: string;
+    filterGameType: string;
+    filterClearAll: string;
+    filterApply: string;
+    filterClose: string;
+    removeFilterTag: string;
+    loadMore: string;
+    shownGames: string;
+    gameTypes: {
+      top: string;
+      baccarat: string;
+      gameShow: string;
+      roulette: string;
+      sicbo: string;
+      poker: string;
+    };
+    categories: {
+      exclusive: string;
+      casino: string;
+      slot: string;
+      crash: string;
+      table: string;
+      fishing: string;
+      arcade: string;
+      lottery: string;
+    };
   };
   footer: FooterMessages;
 };
@@ -75,6 +115,7 @@ const en: Messages = {
     changeLocale: "Change currency and language",
     previousProviders: "Previous providers",
     nextProviders: "Next providers",
+    backHome: "Back to home",
   },
   sidebar: {
     exclusive: "Exclusive Games",
@@ -257,6 +298,45 @@ const en: Messages = {
       yellowBat: "Yellow Bat",
     },
   },
+  lobby: {
+    searchPlaceholder: "Search games",
+    filter: "Filter",
+    sort: "Sort",
+    pickCategory: "Game category",
+    pickSort: "Sort games",
+    sortRecommend: "Recommend",
+    sortAZ: "A - Z",
+    sortZA: "Z - A",
+    sortNewOld: "New - Old",
+    sortOldNew: "Old - New",
+    filterPanelTitle: "Filter",
+    filterProviders: "Providers",
+    filterGameType: "Game Type",
+    filterClearAll: "Clear all",
+    filterApply: "Apply filters",
+    filterClose: "Close",
+    removeFilterTag: "Remove filter",
+    loadMore: "Load more",
+    shownGames: "Shown {shown} of {total} games",
+    gameTypes: {
+      top: "Top Games",
+      baccarat: "Baccarat",
+      gameShow: "Game Show",
+      roulette: "Roulette",
+      sicbo: "Sic Bo",
+      poker: "Poker",
+    },
+    categories: {
+      exclusive: "Exclusive Games",
+      casino: "Casino",
+      slot: "Slot",
+      crash: "Crash",
+      table: "Table",
+      fishing: "Fishing",
+      arcade: "Arcade",
+      lottery: "Lottery",
+    },
+  },
   footer: footerEn,
 };
 
@@ -282,6 +362,7 @@ const bn: Messages = {
     changeLocale: "মুদ্রা ও ভাষা পরিবর্তন",
     previousProviders: "আগের প্রোভাইডার",
     nextProviders: "পরের প্রোভাইডার",
+    backHome: "হোমে ফিরুন",
   },
   sidebar: {
     exclusive: "এক্সক্লুসিভ গেমস",
@@ -464,6 +545,45 @@ const bn: Messages = {
       yellowBat: "Yellow Bat",
     },
   },
+  lobby: {
+    searchPlaceholder: "গেম খুঁজুন",
+    filter: "ফিল্টার",
+    sort: "সাজান",
+    pickCategory: "গেমের ধরন বেছে নিন",
+    pickSort: "গেম সাজান",
+    sortRecommend: "রেকমেন্ড",
+    sortAZ: "A - Z",
+    sortZA: "Z - A",
+    sortNewOld: "নতুন - পুরনো",
+    sortOldNew: "পুরনো - নতুন",
+    filterPanelTitle: "ফিল্টার",
+    filterProviders: "প্রোভাইডার",
+    filterGameType: "গেমের ধরন",
+    filterClearAll: "সব মুছুন",
+    filterApply: "ফিল্টার প্রয়োগ",
+    filterClose: "বন্ধ করুন",
+    removeFilterTag: "ফিল্টার সরান",
+    loadMore: "আরও লোড করুন",
+    shownGames: "{total} টি গেমের মধ্যে {shown} টি দেখানো হয়েছে",
+    gameTypes: {
+      top: "টপ গেম",
+      baccarat: "ব্যাকারাট",
+      gameShow: "গেম শো",
+      roulette: "রুলেট",
+      sicbo: "সিক বো",
+      poker: "পোকার",
+    },
+    categories: {
+      exclusive: "এক্সক্লুসিভ গেমগুলো",
+      casino: "ক্যাসিনো",
+      slot: "স্লট",
+      crash: "ক্রাশ",
+      table: "টেবিল",
+      fishing: "ফিশিং",
+      arcade: "আর্কেড",
+      lottery: "লটারি",
+    },
+  },
   footer: footerBn,
 };
 
@@ -489,6 +609,7 @@ const hi: Messages = {
     changeLocale: "मुद्रा और भाषा बदलें",
     previousProviders: "पिछले प्रोवाइडर",
     nextProviders: "अगले प्रोवाइडर",
+    backHome: "होम पर लौटें",
   },
   sidebar: {
     exclusive: "एक्सक्लूसिव गेम्स",
@@ -669,6 +790,45 @@ const hi: Messages = {
       lucky365: "LUCKY365",
       pp: "PP",
       yellowBat: "Yellow Bat",
+    },
+  },
+  lobby: {
+    searchPlaceholder: "गेम खोजें",
+    filter: "फ़िल्टर",
+    sort: "क्रमबद्ध करें",
+    pickCategory: "गेम श्रेणी चुनें",
+    pickSort: "गेम क्रमबद्ध करें",
+    sortRecommend: "अनुशंसित",
+    sortAZ: "A - Z",
+    sortZA: "Z - A",
+    sortNewOld: "नया - पुराना",
+    sortOldNew: "पुराना - नया",
+    filterPanelTitle: "फ़िल्टर",
+    filterProviders: "प्रोवाइडर",
+    filterGameType: "गेम प्रकार",
+    filterClearAll: "सभी साफ़ करें",
+    filterApply: "फ़िल्टर लागू करें",
+    filterClose: "बंद करें",
+    removeFilterTag: "फ़िल्टर हटाएँ",
+    loadMore: "और लोड करें",
+    shownGames: "{total} में से {shown} गेम दिखाए गए",
+    gameTypes: {
+      top: "टॉप गेम",
+      baccarat: "बैकारेट",
+      gameShow: "गेम शो",
+      roulette: "रूलेट",
+      sicbo: "सिक बो",
+      poker: "पोकर",
+    },
+    categories: {
+      exclusive: "एक्सक्लूसिव गेम्स",
+      casino: "कैसीनो",
+      slot: "स्लॉट",
+      crash: "क्रैश",
+      table: "टेबल",
+      fishing: "फिशिंग",
+      arcade: "आर्केड",
+      lottery: "लॉटरी",
     },
   },
   footer: footerHi,

@@ -1,7 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { featuredProviders } from "@/lib/home-providers-data";
+import { featuredProviderHref } from "@/lib/vendor-routes";
 import { useMounted } from "@/lib/use-mounted";
 import { useLocale } from "./LocaleProvider";
 
@@ -71,17 +73,18 @@ function ProviderLogo({ type }: { type: FeaturedProvider["logo"] }) {
 }
 
 function ProviderCard({ id, logo }: FeaturedProvider) {
-  const { t } = useLocale();
+  const { t, preferences } = useLocale();
   const label = t.home.providers[id] ?? id;
+  const href = featuredProviderHref(preferences.locale, id);
 
   return (
-    <a
-      href="#"
+    <Link
+      href={href}
       className="flex min-w-[148px] shrink-0 items-center gap-3 rounded-md bg-[#1f1f1f] px-3 py-3 transition-colors hover:bg-[#2a2a2a] sm:min-w-[160px]"
     >
       <ProviderLogo type={logo} />
       <span className="truncate text-[13px] font-medium text-[#d4d4d4]">{label}</span>
-    </a>
+    </Link>
   );
 }
 

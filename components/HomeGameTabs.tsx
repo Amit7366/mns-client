@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   categoryProviders,
   homeTabIds,
   popularGames,
   type HomeTabId,
 } from "@/lib/home-games-data";
+import { categoryProviderHref } from "@/lib/vendor-routes";
 import { menuIconFor } from "./SidebarIcons";
 import { useLocale } from "./LocaleProvider";
 
@@ -87,17 +89,24 @@ function PopularGameCard({
 }
 
 function ProviderCard({
+  id,
   label,
   color,
   initials,
+  activeTab,
 }: {
+  id: string;
   label: string;
   color: string;
   initials: string;
+  activeTab: Exclude<HomeTabId, "popular">;
 }) {
+  const { preferences } = useLocale();
+  const href = categoryProviderHref(preferences.locale, activeTab, id);
+
   return (
-    <a
-      href="#"
+    <Link
+      href={href}
       className="flex items-center gap-2 rounded-md bg-[#262626] px-2.5 py-2.5 transition-colors hover:bg-[#303030]"
     >
       <span
@@ -107,7 +116,7 @@ function ProviderCard({
         {initials}
       </span>
       <span className="truncate text-[12px] font-medium leading-snug text-[#e5e5e5]">{label}</span>
-    </a>
+    </Link>
   );
 }
 
@@ -168,9 +177,11 @@ export default function HomeGameTabs() {
           {categoryProviders[activeTab].map((provider) => (
             <ProviderCard
               key={provider.id}
+              id={provider.id}
               label={t.home.providers[provider.id] ?? provider.id}
               color={provider.color}
               initials={provider.initials}
+              activeTab={activeTab}
             />
           ))}
         </div>

@@ -72,8 +72,8 @@ export default function SiteFooter() {
   const f = t.footer;
 
   return (
-    <footer className="border-t border-[#1f1f1f] bg-black px-4 py-8 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-4">
+    <footer className="safe-bottom border-t border-[#1f1f1f] bg-black px-4 py-8 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-2 md:grid-cols-4">
         <FooterColumn title={f.gaming}>
           {footerGamingLinks.map((id) => (
             <FooterLink key={id} label={f.links[id]} />
@@ -107,7 +107,7 @@ export default function SiteFooter() {
           {sponsorshipItems.map((item) => {
             const data = f.sponsorshipsData[item.id];
             return (
-              <a key={item.id} href="#" className="flex min-w-[160px] items-center gap-3">
+              <a key={item.id} href="#" className="flex min-w-0 max-w-full items-center gap-3 sm:min-w-[140px]">
                 <SponsorshipLogo color={item.color} initials={item.initials} />
                 <div>
                   <p className="text-[12px] font-medium text-white">{data.name}</p>
@@ -127,7 +127,7 @@ export default function SiteFooter() {
           {ambassadorItems.map((item) => {
             const data = f.ambassadorsData[item.id];
             return (
-              <a key={item.id} href="#" className="flex min-w-[140px] items-center gap-3">
+              <a key={item.id} href="#" className="flex min-w-0 max-w-full items-center gap-3 sm:min-w-[120px]">
                 <AmbassadorMark mark={item.mark} />
                 <div>
                   <p className="text-[12px] font-medium text-white">{data.name}</p>

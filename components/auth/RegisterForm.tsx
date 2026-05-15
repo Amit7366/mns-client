@@ -167,7 +167,7 @@ export default function RegisterForm() {
 
       <button
         type="submit"
-        className="mt-8 w-full rounded-md bg-[#0d4a2e] py-3.5 text-[15px] font-bold text-white transition-colors hover:bg-[#178358]"
+        className="focus-ring mt-8 w-full min-h-12 rounded-md bg-[#0d4a2e] py-3.5 text-[15px] font-bold text-white transition-colors hover:bg-[#178358]"
       >
         {step === "password" ? a.signUpButton : a.continue}
       </button>

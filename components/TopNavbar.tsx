@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { lobbyCategoryHref, type LobbyKind } from "@/lib/vendor-routes";
 import LocaleMenuButton from "./LocaleMenuButton";
 import { useLocale } from "./LocaleProvider";
 
@@ -66,20 +67,22 @@ function CasinoIcon() {
 }
 
 function NavLink({
+  href,
   icon,
   label,
 }: {
+  href: string;
   icon: React.ReactNode;
   label: string;
 }) {
   return (
-    <a
-      href="#"
-      className="flex items-center gap-1.5 rounded-md px-2 py-1.5 text-[13px] text-[#d4d4d4] transition-colors hover:text-white"
+    <Link
+      href={href}
+      className="focus-ring flex items-center gap-1.5 rounded-md px-2.5 py-2 text-[13px] text-[#d4d4d4] transition-colors hover:bg-white/5 hover:text-white"
     >
       {icon}
-      {label ? <span>{label}</span> : null}
-    </a>
+      <span>{label}</span>
+    </Link>
   );
 }
 
@@ -91,47 +94,54 @@ export default function TopNavbar({
   menuOpen?: boolean;
 }) {
   const { preferences, t } = useLocale();
+  const locale = preferences.locale;
+  const navHrefs: { kind: LobbyKind; icon: React.ReactNode; label: string }[] = [
+    { kind: "sports", icon: <SportsIcon />, label: t.sidebar.sports },
+    { kind: "slot", icon: <SlotIcon />, label: t.slots },
+    { kind: "casino", icon: <CasinoIcon />, label: t.casino },
+  ];
 
   return (
-    <header className="sticky top-0 z-50 w-full shrink-0 border-b border-[#2a2a2a] bg-[#121212]">
-      <nav className="flex h-[52px] w-full items-center justify-between px-3 sm:px-4 lg:px-6">
-        <div className="flex items-center gap-3 lg:gap-4">
+    <header className="sticky top-0 z-50 w-full shrink-0 border-b border-[#2a2a2a] bg-[#121212] pt-[env(safe-area-inset-top)]">
+      <nav className="flex h-[52px] w-full items-center justify-between gap-2 px-3 sm:px-4 lg:px-6">
+        <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3 lg:gap-4">
           <button
             type="button"
             aria-label={t.ui.openMenu}
+            aria-expanded={menuOpen}
             onClick={onMenuClick}
-            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-md transition-colors ${
+            className={`focus-ring flex h-10 w-10 shrink-0 items-center justify-center rounded-md transition-colors ${
               menuOpen ? "bg-[#333333]" : "bg-[#2a2a2a] hover:bg-[#333333]"
             }`}
           >
             <MenuIcon />
           </button>
 
-          <a
-            href={`/${preferences.locale}`}
-            className="flex shrink-0 items-center text-[22px] font-bold tracking-tight"
+          <Link
+            href={`/${locale}`}
+            className="focus-ring flex shrink-0 items-center rounded-md text-[20px] font-bold tracking-tight sm:text-[22px]"
           >
             <span className="text-white">MNS</span>
             <span className="text-[#ed1c24]">Baji</span>
-          </a>
+          </Link>
 
-          <div className="hidden items-center gap-1 md:flex">
-            <NavLink icon={<SportsIcon />} label={t.sidebar.sports} />
-            <NavLink icon={<SlotIcon />} label={t.slots} />
-            <NavLink icon={<CasinoIcon />} label={t.casino} />
+          <div className="hidden min-w-0 items-center gap-0.5 md:flex">
+            {navHrefs.map(({ kind, icon, label }) => (
+              <NavLink key={kind} href={lobbyCategoryHref(locale, kind)} icon={icon} label={label} />
+            ))}
           </div>
         </div>
 
-        <div className="flex items-center gap-2 lg:gap-3">
+        <div className="flex shrink-0 items-center gap-2 lg:gap-3">
           <Link
-            href={`/${preferences.locale}/login`}
-            className="flex h-8 items-center rounded-md border border-[#555555] px-2.5 text-[12px] font-medium text-white transition-colors hover:border-[#777777] hover:bg-white/5 sm:px-4 sm:text-[13px]"
+            href={`/${locale}/login`}
+            className="focus-ring flex h-9 min-w-[4.5rem] items-center justify-center rounded-md border border-[#555555] px-3 text-[12px] font-medium text-white transition-colors hover:border-[#777777] hover:bg-white/5 sm:min-w-[5rem] sm:text-[13px]"
           >
             {t.login}
           </Link>
           <Link
-            href={`/${preferences.locale}/register`}
-            className="flex h-8 items-center rounded-md bg-[#178358] px-2.5 text-[12px] font-medium text-white transition-colors hover:bg-[#1a9664] sm:px-4 sm:text-[13px]"
+            href={`/${locale}/register`}
+            className="focus-ring flex h-9 min-w-[4.5rem] items-center justify-center rounded-md bg-[#178358] px-3 text-[12px] font-medium text-white transition-colors hover:bg-[#1a9664] sm:min-w-[5rem] sm:text-[13px]"
           >
             {t.signUp}
           </Link>

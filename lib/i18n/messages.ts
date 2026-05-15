@@ -71,6 +71,7 @@ export type Messages = {
     removeFilterTag: string;
     loadMore: string;
     shownGames: string;
+    noGamesFound: string;
     gameTypes: {
       top: string;
       baccarat: string;
@@ -318,6 +319,7 @@ const en: Messages = {
     removeFilterTag: "Remove filter",
     loadMore: "Load more",
     shownGames: "Shown {shown} of {total} games",
+    noGamesFound: "No games match your search or filters.",
     gameTypes: {
       top: "Top Games",
       baccarat: "Baccarat",
@@ -565,6 +567,7 @@ const bn: Messages = {
     removeFilterTag: "ফিল্টার সরান",
     loadMore: "আরও লোড করুন",
     shownGames: "{total} টি গেমের মধ্যে {shown} টি দেখানো হয়েছে",
+    noGamesFound: "আপনার অনুসন্ধান বা ফিল্টারের সাথে কোনো গেম মিলছে না।",
     gameTypes: {
       top: "টপ গেম",
       baccarat: "ব্যাকারাট",
@@ -812,6 +815,7 @@ const hi: Messages = {
     removeFilterTag: "फ़िल्टर हटाएँ",
     loadMore: "और लोड करें",
     shownGames: "{total} में से {shown} गेम दिखाए गए",
+    noGamesFound: "आपकी खोज या फ़िल्टर से कोई गेम मेल नहीं खाता।",
     gameTypes: {
       top: "टॉप गेम",
       baccarat: "बैकारेट",

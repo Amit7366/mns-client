@@ -105,7 +105,7 @@ function NavButton({
       aria-label={label}
       onClick={onClick}
       disabled={disabled}
-      className="flex h-8 w-8 items-center justify-center rounded-full border border-[#333333] bg-[#1a1a1a] text-[#a3a3a3] transition-colors hover:border-[#444444] hover:text-white disabled:cursor-not-allowed disabled:opacity-35"
+      className="focus-ring flex h-9 w-9 items-center justify-center rounded-full border border-[#333333] bg-[#1a1a1a] text-[#a3a3a3] transition-colors hover:border-[#444444] hover:text-white disabled:cursor-not-allowed disabled:opacity-35"
     >
       <svg width="8" height="12" viewBox="0 0 8 12" fill="none" aria-hidden>
         {direction === "left" ? (
@@ -178,7 +178,7 @@ export default function ProviderSection() {
       <div
         ref={trackRef}
         onScroll={updateScrollState}
-        className="flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex snap-x snap-mandatory gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {featuredProviders.map((provider) => (
           <ProviderCard key={provider.id} {...provider} />

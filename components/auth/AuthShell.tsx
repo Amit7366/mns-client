@@ -49,7 +49,7 @@ export default function AuthShell({ mode, children }: AuthShellProps) {
         </Link>
         <Link
           href={base}
-          className="flex h-9 w-9 items-center justify-center rounded-md transition-colors hover:bg-white/10"
+          className="focus-ring flex h-10 w-10 items-center justify-center rounded-md transition-colors hover:bg-white/10"
           aria-label={a.home}
         >
           <HomeIcon />
@@ -75,7 +75,7 @@ export default function AuthShell({ mode, children }: AuthShellProps) {
             <nav className="mb-8 flex border-b border-[#2a2a2a]" aria-label="Authentication">
               <Link
                 href={`${base}/login`}
-                className={`relative flex-1 pb-3 text-center text-[15px] font-semibold transition-colors ${
+                className={`focus-ring relative flex min-h-11 flex-1 items-center justify-center pb-3 text-center text-[15px] font-semibold transition-colors ${
                   mode === "login" ? "text-white" : "text-[#6b7280] hover:text-[#9ca3af]"
                 }`}
               >
@@ -86,7 +86,7 @@ export default function AuthShell({ mode, children }: AuthShellProps) {
               </Link>
               <Link
                 href={`${base}/register`}
-                className={`relative flex-1 pb-3 text-center text-[15px] font-semibold transition-colors ${
+                className={`focus-ring relative flex min-h-11 flex-1 items-center justify-center pb-3 text-center text-[15px] font-semibold transition-colors ${
                   mode === "register" ? "text-white" : "text-[#6b7280] hover:text-[#9ca3af]"
                 }`}
               >

@@ -80,4 +80,28 @@
   .announcement-track:hover {
     animation-play-state: paused;
   }
+
+  .focus-ring {
+    @apply outline-none focus-visible:ring-2 focus-visible:ring-[#178358]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a];
+  }
+
+  .touch-target {
+    @apply inline-flex min-h-11 min-w-11 items-center justify-center;
+  }
+
+  .safe-bottom {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-slow,
+  .animate-float-medium,
+  .animate-float-fast {
+    animation: none;
+  }
+
+  .announcement-track {
+    animation: none;
+  }
 }

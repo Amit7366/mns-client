@@ -302,15 +302,6 @@ export default function VendorGamesLobby({ locale, kind, vendors, activeTypes, g
   }
 
   useEffect(() => {
-    if (!filterOpen) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [filterOpen]);
-
-  useEffect(() => {
     if (!menuOpen && !sortMenuOpen && !filterOpen) return;
     function onPointerDown(e: PointerEvent) {
       if (!menuOpen && !sortMenuOpen) return;
@@ -348,7 +339,7 @@ export default function VendorGamesLobby({ locale, kind, vendors, activeTypes, g
           <div className="relative min-w-0" ref={menuWrapRef}>
             <button
               type="button"
-              className="flex max-w-full items-center gap-2 rounded-md bg-transparent py-1 text-left"
+              className="focus-ring flex max-w-full items-center gap-2 rounded-md bg-transparent py-1.5 pr-1 text-left"
               aria-expanded={menuOpen}
               aria-haspopup="menu"
               aria-controls="lobby-category-menu"
@@ -396,7 +387,7 @@ export default function VendorGamesLobby({ locale, kind, vendors, activeTypes, g
             <button
               type="button"
               aria-label={t.lobby.filter}
-              className="p-1.5 hover:opacity-80"
+              className="focus-ring flex h-10 w-10 items-center justify-center rounded-md transition-colors hover:bg-white/5"
               onClick={openFilterPanel}
             >
               <FilterIcon />
@@ -408,7 +399,7 @@ export default function VendorGamesLobby({ locale, kind, vendors, activeTypes, g
                 aria-haspopup="menu"
                 aria-controls="lobby-sort-menu"
                 aria-label={t.lobby.pickSort}
-                className="p-1.5 hover:opacity-80"
+                className="focus-ring flex h-10 w-10 items-center justify-center rounded-md transition-colors hover:bg-white/5"
                 onClick={() => {
                   setMenuOpen(false);
                   setSortMenuOpen((o) => !o);
@@ -532,7 +523,9 @@ export default function VendorGamesLobby({ locale, kind, vendors, activeTypes, g
         </div>
 
         {totalGames === 0 ? (
-          <p className="mt-8 text-center text-sm text-[#6b7280]">{t.lobby.searchPlaceholder}</p>
+          <p className="mx-auto mt-8 max-w-md rounded-lg border border-dashed border-[#2a2a2a] bg-[#141414] px-4 py-10 text-center text-sm text-[#9ca3af]">
+            {t.lobby.noGamesFound}
+          </p>
         ) : null}
 
         {totalGames > 0 ? (
@@ -542,7 +535,7 @@ export default function VendorGamesLobby({ locale, kind, vendors, activeTypes, g
                 type="button"
                 disabled={loadingMore}
                 onClick={handleLoadMore}
-                className="min-w-[140px] rounded-md bg-[#2a2a2a] px-8 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-[#353535] disabled:cursor-wait disabled:opacity-70"
+                className="focus-ring min-h-11 min-w-[140px] rounded-md bg-[#2a2a2a] px-8 py-2.5 text-[14px] font-semibold text-white transition-colors hover:bg-[#353535] disabled:cursor-wait disabled:opacity-70"
               >
                 {loadingMore ? "…" : t.lobby.loadMore}
               </button>
@@ -621,7 +614,7 @@ export default function VendorGamesLobby({ locale, kind, vendors, activeTypes, g
                       return (
                         <li key={row.vendorCode}>
                           <label className="flex cursor-pointer items-center gap-3 rounded-md px-2 py-2.5 hover:bg-white/[0.04]">
-                            <span className="relative flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded border border-[#404040] bg-[#1a1a1a]">
+                            <span className="relative flex h-6 w-6 shrink-0 items-center justify-center rounded border border-[#404040] bg-[#1a1a1a]">
                               <input
                                 type="checkbox"
                                 className="peer sr-only"
@@ -666,7 +659,7 @@ export default function VendorGamesLobby({ locale, kind, vendors, activeTypes, g
                       return (
                         <li key={typeId}>
                           <label className="flex cursor-pointer items-center gap-3 rounded-md px-2 py-2.5 hover:bg-white/[0.04]">
-                            <span className="relative flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded border border-[#404040] bg-[#1a1a1a]">
+                            <span className="relative flex h-6 w-6 shrink-0 items-center justify-center rounded border border-[#404040] bg-[#1a1a1a]">
                               <input
                                 type="checkbox"
                                 className="peer sr-only"
@@ -694,7 +687,7 @@ export default function VendorGamesLobby({ locale, kind, vendors, activeTypes, g
               </div>
             </div>
 
-            <footer className="flex shrink-0 gap-2 border-t border-[#2a2a2a] p-3">
+            <footer className="safe-bottom flex shrink-0 gap-2 border-t border-[#2a2a2a] p-3">
               <button
                 type="button"
                 className="flex-1 rounded-md border border-[#3f3f3f] py-3 text-[14px] font-semibold text-[#d4d4d4] transition-colors hover:bg-white/[0.06]"

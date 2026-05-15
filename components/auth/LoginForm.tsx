@@ -48,7 +48,7 @@ export default function LoginForm() {
 
       <button
         type="submit"
-        className="mt-auto w-full rounded-md bg-[#0d4a2e] py-3.5 text-[15px] font-bold text-white transition-colors hover:bg-[#178358]"
+        className="focus-ring mt-auto w-full min-h-12 rounded-md bg-[#0d4a2e] py-3.5 text-[15px] font-bold text-white transition-colors hover:bg-[#178358]"
       >
         {a.logInButton}
       </button>

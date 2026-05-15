@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import type { SidebarMenuItem } from "./sidebar-menu";
+import PromotionSidebarSlider from "./promotions/PromotionSidebarSlider";
 import {
   sidebarMenuItems,
   sidebarPrimaryItems,
@@ -44,7 +46,7 @@ function PromoBanner() {
   return (
     <div className="mx-2 mb-2 shrink-0 overflow-hidden rounded-lg">
       <div className="relative flex min-h-[72px] items-center overflow-hidden rounded-lg bg-gradient-to-r from-[#2a0808] via-[#5c1010] to-[#8b1a1a] px-3 py-2.5">
-        <p className="min-w-0 flex-1 pr-[84px] text-[10px] font-semibold uppercase leading-[1.45] tracking-wide text-white/95 sm:text-[11px]">
+        <p className="min-w-0 flex-1 pr-[84px] text-[11px] font-semibold uppercase leading-[1.45] tracking-wide text-white/95 sm:text-[12px]">
           {t.promoSponsor}
         </p>
         <div className="absolute -right-1 bottom-0 top-0 flex w-[88px] items-center justify-center">
@@ -65,10 +67,11 @@ type MenuRowProps = {
 };
 
 function MenuRow({ item, expandedId, onToggleItem }: MenuRowProps) {
-  const { t } = useLocale();
+  const { t, preferences } = useLocale();
   const kind = item.kind ?? (item.subItems?.length ? "dropdown" : "link");
   const isOpen = expandedId === item.id;
   const label = t.sidebar[item.id] ?? item.id;
+  const isPromotions = item.id === "promotions";
 
   const icon = (
     <span className="flex h-[26px] w-[26px] shrink-0 items-center justify-center">
@@ -111,14 +114,20 @@ function MenuRow({ item, expandedId, onToggleItem }: MenuRowProps) {
       <button
         type="button"
         onClick={() => onToggleItem(item.id)}
-        className="flex w-full items-center gap-3 px-3 py-[13px] text-left transition-opacity hover:opacity-90"
+        className="focus-ring flex w-full items-center gap-3 px-3 py-[13px] text-left transition-opacity hover:opacity-90"
         aria-expanded={isOpen}
       >
         {icon}
         <span className="min-w-0 flex-1 text-[14px] font-normal leading-snug text-[#c8c8c8]">{label}</span>
         <span className="flex shrink-0 items-center gap-2">
           {item.showViewAll ? (
-            <span className="text-[12px] font-medium text-[#4ade80]">{t.viewAll}</span>
+            <Link
+              href={`/${preferences.locale}/promotion`}
+              onClick={(e) => e.stopPropagation()}
+              className="text-[12px] font-medium text-[#4ade80] underline-offset-2 hover:underline"
+            >
+              {t.viewAll}
+            </Link>
           ) : null}
           <Chevron open={isOpen} />
         </span>
@@ -130,18 +139,22 @@ function MenuRow({ item, expandedId, onToggleItem }: MenuRowProps) {
         }`}
       >
         <div className="overflow-hidden">
-          <div className="space-y-1 px-2 pb-1">
-            {item.subItems?.map((sub) => (
-              <a
-                key={sub.id}
-                href="#"
-                className="flex items-center gap-3 rounded-md bg-[#242424] px-3 py-2.5 text-[13px] text-[#d8d8d8] transition-colors hover:bg-[#2e2e2e]"
-              >
-                <SubItemIcon id={sub.id} label={t.sub[sub.id] ?? sub.id} accent={sub.accent} />
-                <span className="truncate">{t.sub[sub.id] ?? sub.id}</span>
-              </a>
-            ))}
-          </div>
+          {isPromotions && isOpen ? (
+            <PromotionSidebarSlider />
+          ) : (
+            <div className="space-y-1 px-2 pb-1">
+              {item.subItems?.map((sub) => (
+                <a
+                  key={sub.id}
+                  href="#"
+                  className="flex items-center gap-3 rounded-md bg-[#242424] px-3 py-2.5 text-[13px] text-[#d8d8d8] transition-colors hover:bg-[#2e2e2e]"
+                >
+                  <SubItemIcon id={sub.id} label={t.sub[sub.id] ?? sub.id} accent={sub.accent} />
+                  <span className="truncate">{t.sub[sub.id] ?? sub.id}</span>
+                </a>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -213,7 +226,7 @@ export default function SideNavigation({
                 type="button"
                 aria-label={t.sidebar[item.id] ?? item.id}
                 onClick={() => onItemClick(item.id)}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-[#262626]"
+                className="focus-ring flex h-11 w-11 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-[#262626]"
               >
                 {menuIconFor(item.id)}
               </button>

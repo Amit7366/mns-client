@@ -8,7 +8,7 @@ import {
   popularGames,
   type HomeTabId,
 } from "@/lib/home-games-data";
-import { categoryProviderHref } from "@/lib/vendor-routes";
+import { categoryProviderHref, lobbyCategoryHref } from "@/lib/vendor-routes";
 import { menuIconFor } from "./SidebarIcons";
 import { useLocale } from "./LocaleProvider";
 
@@ -121,7 +121,7 @@ function ProviderCard({
 }
 
 export default function HomeGameTabs() {
-  const { t } = useLocale();
+  const { t, preferences } = useLocale();
   const [activeTab, setActiveTab] = useState<HomeTabId>("popular");
 
   return (
@@ -134,7 +134,7 @@ export default function HomeGameTabs() {
               key={tabId}
               type="button"
               onClick={() => setActiveTab(tabId)}
-              className={`flex min-w-[72px] shrink-0 flex-col items-center gap-1 rounded-lg px-2 py-2 transition-colors sm:min-w-[80px] ${
+              className={`focus-ring flex min-h-11 min-w-[76px] shrink-0 flex-col items-center justify-center gap-1 rounded-lg px-2 py-2 transition-colors sm:min-w-[84px] ${
                 active
                   ? "bg-[#178358] text-white"
                   : "text-[#a3a3a3] hover:bg-[#1f1f1f] hover:text-white"
@@ -164,12 +164,12 @@ export default function HomeGameTabs() {
             ))}
           </div>
           <div className="flex justify-center">
-            <button
-              type="button"
-              className="rounded-md bg-[#178358] px-10 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#1a9664]"
+            <Link
+              href={lobbyCategoryHref(preferences.locale, "slot")}
+              className="focus-ring inline-flex min-h-11 items-center rounded-md bg-[#178358] px-10 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#1a9664]"
             >
               {t.home.more}
-            </button>
+            </Link>
           </div>
         </div>
       ) : (

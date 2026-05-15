@@ -34,7 +34,7 @@ function PhoneMockup({
   return (
     <div className="relative w-[92px] shrink-0 sm:w-[108px]">
       <div className="overflow-hidden rounded-[18px] border border-white/20 bg-[#111] shadow-[0_12px_40px_rgba(0,0,0,0.45)]">
-        <div className="bg-[#1a1a1a] px-2 py-1.5 text-center text-[8px] font-semibold text-white/80">
+        <div className="bg-[#1a1a1a] px-2 py-1.5 text-center text-[9px] font-semibold text-white/80 sm:text-[10px]">
           {step}
         </div>
         <div className="space-y-1.5 bg-gradient-to-b from-[#24143f] to-[#12091f] p-2">
@@ -144,7 +144,7 @@ export default function HeroSlider() {
         type="button"
         aria-label={t.ui.previousSlide}
         onClick={prev}
-        className="absolute left-2 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-md bg-black/45 text-white backdrop-blur-sm transition hover:bg-black/65 sm:left-4"
+        className="focus-ring absolute left-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-md bg-black/45 text-lg text-white backdrop-blur-sm transition hover:bg-black/65 sm:left-4"
       >
         ‹
       </button>
@@ -152,7 +152,7 @@ export default function HeroSlider() {
         type="button"
         aria-label={t.ui.nextSlide}
         onClick={next}
-        className="absolute right-2 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-md bg-black/45 text-white backdrop-blur-sm transition hover:bg-black/65 sm:right-4"
+        className="focus-ring absolute right-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-md bg-black/45 text-lg text-white backdrop-blur-sm transition hover:bg-black/65 sm:right-4"
       >
         ›
       </button>
@@ -164,10 +164,14 @@ export default function HeroSlider() {
             type="button"
             aria-label={`${t.ui.goToSlide} ${index + 1}`}
             onClick={() => setActive(index)}
-            className={`h-2 rounded-full transition-all ${
-              index === active ? "w-6 bg-[#f5c518]" : "w-2 bg-white/40"
-            }`}
-          />
+            className="focus-ring flex h-11 w-11 items-center justify-center rounded-full"
+          >
+            <span
+              className={`block rounded-full transition-all ${
+                index === active ? "h-2.5 w-6 bg-[#f5c518]" : "h-2 w-2 bg-white/40"
+              }`}
+            />
+          </button>
         ))}
       </div>
     </section>

@@ -25,7 +25,7 @@ function NavButton({
       type="button"
       aria-label={label}
       onClick={onClick}
-      className="flex h-8 w-8 items-center justify-center rounded-md border border-[#333333] bg-[#1a1a1a] text-[#a3a3a3] transition-colors hover:border-[#444444] hover:text-white"
+      className="focus-ring flex h-9 w-9 items-center justify-center rounded-md border border-[#333333] bg-[#1a1a1a] text-[#a3a3a3] transition-colors hover:border-[#444444] hover:text-white"
     >
       <svg width="8" height="12" viewBox="0 0 8 12" fill="none" aria-hidden>
         {direction === "left" ? (

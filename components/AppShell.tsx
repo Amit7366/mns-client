@@ -50,7 +50,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           onExpand={openSidebar}
         />
 
-        <main className="min-w-0 flex-1 overflow-y-auto">
+        <main className="min-w-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-y-contain [-webkit-overflow-scrolling:touch]">
           {children}
           <SiteFooter />
         </main>

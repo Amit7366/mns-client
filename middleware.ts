@@ -14,6 +14,14 @@ export function middleware(request: NextRequest) {
     return response;
   }
 
+  if (pathname === "/login" || pathname === "/register") {
+    const saved = readPreferencesFromCookie(request.headers.get("cookie"));
+    const locale = saved?.locale ?? DEFAULT_PREFERENCES.locale;
+    const response = NextResponse.redirect(new URL(`/${locale}${pathname}`, request.url));
+    response.headers.set("x-locale", locale);
+    return response;
+  }
+
   const locale = pathname.split("/")[1];
   if (locale && !isValidLocale(locale)) {
     const response = NextResponse.redirect(new URL(`/${DEFAULT_PREFERENCES.locale}`, request.url));

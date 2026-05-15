@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import LocaleMenuButton from "./LocaleMenuButton";
 import { useLocale } from "./LocaleProvider";
 
@@ -122,18 +123,18 @@ export default function TopNavbar({
         </div>
 
         <div className="flex items-center gap-2 lg:gap-3">
-          <button
-            type="button"
-            className="h-8 rounded-md border border-[#555555] px-2.5 text-[12px] font-medium text-white transition-colors hover:border-[#777777] hover:bg-white/5 sm:px-4 sm:text-[13px]"
+          <Link
+            href={`/${preferences.locale}/login`}
+            className="flex h-8 items-center rounded-md border border-[#555555] px-2.5 text-[12px] font-medium text-white transition-colors hover:border-[#777777] hover:bg-white/5 sm:px-4 sm:text-[13px]"
           >
             {t.login}
-          </button>
-          <button
-            type="button"
-            className="h-8 rounded-md bg-[#178358] px-2.5 text-[12px] font-medium text-white transition-colors hover:bg-[#1a9664] sm:px-4 sm:text-[13px]"
+          </Link>
+          <Link
+            href={`/${preferences.locale}/register`}
+            className="flex h-8 items-center rounded-md bg-[#178358] px-2.5 text-[12px] font-medium text-white transition-colors hover:bg-[#1a9664] sm:px-4 sm:text-[13px]"
           >
             {t.signUp}
-          </button>
+          </Link>
           <LocaleMenuButton />
         </div>
       </nav>

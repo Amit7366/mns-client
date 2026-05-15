@@ -1,6 +1,5 @@
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import AppShell from "@/components/AppShell";
 import { LocaleProvider } from "@/components/LocaleProvider";
 import { isValidLocale, type Locale } from "@/lib/locale";
 import { readPreferencesFromCookie } from "@/lib/locale-storage";
@@ -24,7 +23,7 @@ export default async function LocaleLayout({
 
   return (
     <LocaleProvider locale={locale} initialPreferences={initialPreferences}>
-      <AppShell>{children}</AppShell>
+      {children}
     </LocaleProvider>
   );
 }

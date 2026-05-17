@@ -110,7 +110,7 @@ export default function TopNavbar({
             aria-label={t.ui.openMenu}
             aria-expanded={menuOpen}
             onClick={onMenuClick}
-            className={`focus-ring flex h-10 w-10 shrink-0 items-center justify-center rounded-md transition-colors ${
+            className={`focus-ring hidden h-10 w-10 shrink-0 items-center justify-center rounded-md transition-colors lg:flex ${
               menuOpen ? "bg-[#333333]" : "bg-[#2a2a2a] hover:bg-[#333333]"
             }`}
           >

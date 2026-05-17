@@ -1,9 +1,11 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import TopNavbar from "./TopNavbar";
 import SideNavigation from "./SideNavigation";
 import SiteFooter from "./SiteFooter";
+import MobileBottomNav from "./MobileBottomNav";
 import CurrencyLanguageModal from "./CurrencyLanguageModal";
 
 import { useLocale } from "./LocaleProvider";
@@ -28,6 +30,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     setExpandedId((current) => (current === id ? null : id));
   }, []);
 
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setSidebarExpanded(false);
+  }, [pathname]);
+
   return (
     <div className="flex h-full min-h-0 flex-1 flex-col overflow-hidden bg-[#0a0a0a]">
       <TopNavbar onMenuClick={toggleSidebar} menuOpen={sidebarExpanded} />
@@ -50,11 +58,13 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           onExpand={openSidebar}
         />
 
-        <main className="min-w-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-y-contain [-webkit-overflow-scrolling:touch]">
+        <main className="min-w-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-y-contain pb-[calc(3.5rem+env(safe-area-inset-bottom))] [-webkit-overflow-scrolling:touch] lg:pb-0">
           {children}
           <SiteFooter />
         </main>
       </div>
+
+      <MobileBottomNav onMenuClick={toggleSidebar} menuOpen={sidebarExpanded} />
       <CurrencyLanguageModal />
     </div>
   );

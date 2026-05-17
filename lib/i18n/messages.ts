@@ -37,6 +37,8 @@ export type Messages = {
     previousProviders: string;
     nextProviders: string;
     backHome: string;
+    menu: string;
+    bottomNavigation: string;
   };
   sidebar: Record<string, string>;
   sub: Record<string, string>;
@@ -117,6 +119,8 @@ const en: Messages = {
     previousProviders: "Previous providers",
     nextProviders: "Next providers",
     backHome: "Back to home",
+    menu: "Menu",
+    bottomNavigation: "Main navigation",
   },
   sidebar: {
     exclusive: "Exclusive Games",
@@ -365,6 +369,8 @@ const bn: Messages = {
     previousProviders: "আগের প্রোভাইডার",
     nextProviders: "পরের প্রোভাইডার",
     backHome: "হোমে ফিরুন",
+    menu: "মেনু",
+    bottomNavigation: "প্রধান নেভিগেশন",
   },
   sidebar: {
     exclusive: "এক্সক্লুসিভ গেমস",
@@ -613,6 +619,8 @@ const hi: Messages = {
     previousProviders: "पिछले प्रोवाइडर",
     nextProviders: "अगले प्रोवाइडर",
     backHome: "होम पर लौटें",
+    menu: "मेनू",
+    bottomNavigation: "मुख्य नेविगेशन",
   },
   sidebar: {
     exclusive: "एक्सक्लूसिव गेम्स",

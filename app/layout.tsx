@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Noto_Sans_Bengali, Noto_Sans_Devanagari } from "next/font/google";
 import { headers } from "next/headers";
 import { isValidLocale, type Locale } from "@/lib/locale";
+import DisablePinchZoom from "@/components/DisablePinchZoom";
 import { localeFontClass } from "@/lib/locale-font";
 import "./globals.css";
 
@@ -47,8 +48,10 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  minimumScale: 1,
   maximumScale: 1,
   userScalable: false,
+  viewportFit: "cover",
   themeColor: "#111111",
 };
 
@@ -68,10 +71,17 @@ export default async function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${notoSansBengali.variable} ${notoSansDevanagari.variable} h-full antialiased`}
     >
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+        />
+      </head>
       <body
         suppressHydrationWarning
         className={`flex h-dvh flex-col overflow-hidden bg-[#0a0a0a] ${localeFontClass(locale)}`}
       >
+        <DisablePinchZoom />
         {children}
       </body>
     </html>

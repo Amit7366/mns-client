@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
 @layer base {
-  html {
-    touch-action: manipulation;
+  html,
+  body {
+    touch-action: pan-x pan-y;
+    -ms-touch-action: pan-x pan-y;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
   .font-bengali {
     font-family: var(--font-bengali), sans-serif;

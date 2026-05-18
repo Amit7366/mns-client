@@ -14,9 +14,10 @@ import {
   lobbyCategoryHref,
   type LobbyKind,
 } from "@/lib/vendor-routes";
-import type { VendorGameTile } from "@/lib/vendor-games-data";
+import { isValidGameImageUrl, type VendorGameTile } from "@/lib/vendor-games-data";
 import { menuIconFor } from "./SidebarIcons";
 import { useLocale } from "./LocaleProvider";
+import Image from "next/image";
 
 function lobbyCategoryLabel(t: Messages, kind: LobbyKind): string {
   if (kind === "sports") return t.home.tabs.sports;
@@ -371,9 +372,8 @@ export default function VendorGamesLobby({ locale, kind, vendors, activeTypes, g
                       role="menuitem"
                       href={href}
                       onClick={() => setMenuOpen(false)}
-                      className={`flex items-center gap-3 px-3 py-2.5 text-left transition-colors hover:bg-[#262626] ${
-                        active ? "bg-[#2a2a2a]" : ""
-                      }`}
+                      className={`flex items-center gap-3 px-3 py-2.5 text-left transition-colors hover:bg-[#262626] ${active ? "bg-[#2a2a2a]" : ""
+                        }`}
                     >
                       <span className="flex h-8 w-8 shrink-0 items-center justify-center">{menuIconFor(itemIconId)}</span>
                       <span className="truncate text-[14px] font-medium text-white">{lobbyCategoryLabel(t, menuKind)}</span>
@@ -423,9 +423,8 @@ export default function VendorGamesLobby({ locale, kind, vendors, activeTypes, g
                         setSortMode(mode);
                         setSortMenuOpen(false);
                       }}
-                      className={`flex w-full px-3 py-2.5 text-left text-[14px] font-medium text-white transition-colors hover:bg-[#262626] ${
-                        sortMode === mode ? "bg-[#2a2a2a]" : ""
-                      }`}
+                      className={`flex w-full px-3 py-2.5 text-left text-[14px] font-medium text-white transition-colors hover:bg-[#262626] ${sortMode === mode ? "bg-[#2a2a2a]" : ""
+                        }`}
                     >
                       {sortLabel(t, mode)}
                     </button>
@@ -495,29 +494,38 @@ export default function VendorGamesLobby({ locale, kind, vendors, activeTypes, g
               href={buildTileHref(game.id)}
               className="group relative aspect-[3/4] overflow-hidden rounded-md bg-[#141414]"
             >
-              <div
-                className={`absolute inset-0 bg-gradient-to-b ${game.gradient} transition-transform duration-200 group-hover:scale-105`}
-              />
-              <div
-                className="absolute inset-0 opacity-25"
-                style={{
-                  background: `radial-gradient(circle at 50% 25%, ${game.glow}, transparent 60%)`,
-                }}
-              />
-              <span className="absolute right-1.5 top-1.5 z-[1] text-[9px] font-bold uppercase leading-none tracking-tight text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
-                bj
-              </span>
-              <div className="absolute inset-x-0 top-[22%] flex justify-center text-3xl drop-shadow-md sm:text-4xl">
-                {game.emoji}
-              </div>
-              <div className="absolute inset-x-0 bottom-0 z-[1] bg-gradient-to-t from-black via-black/75 to-transparent px-1.5 pb-2 pt-8 sm:px-2 sm:pb-2.5 sm:pt-10">
-                <p className="text-center text-[10px] font-extrabold uppercase leading-tight tracking-wide text-white drop-shadow-md sm:text-[11px]">
-                  {game.title}
-                </p>
-                <p className="mt-1 text-center text-[8px] font-medium uppercase tracking-wider text-white/80 sm:text-[9px]">
-                  {game.providerLabel}
-                </p>
-              </div>
+              {isValidGameImageUrl(game.image) ? (
+                <Image
+                  src={game.image}
+                  alt={`${game.title} — ${game.providerLabel}`}
+                  fill
+                  sizes="(max-width: 640px) 33vw, (max-width: 1023px) 25vw, 12.5vw"
+                  className="object-cover object-center transition-transform duration-200 group-hover:scale-105"
+                />
+              ) : (
+                <>
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-b ${game.gradient} transition-transform duration-200 group-hover:scale-105`}
+                  />
+                  <div
+                    className="absolute inset-0 opacity-25"
+                    style={{
+                      background: `radial-gradient(circle at 50% 25%, ${game.glow}, transparent 60%)`,
+                    }}
+                  />
+                  <span className="absolute right-1.5 top-1.5 z-[1] text-[9px] font-bold uppercase leading-none tracking-tight text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+                    bj
+                  </span>
+                  <div className="absolute inset-x-0 bottom-0 z-[1] bg-gradient-to-t from-black via-black/75 to-transparent px-1.5 pb-2 pt-8 sm:px-2 sm:pb-2.5 sm:pt-10">
+                    <p className="text-center text-[10px] font-extrabold uppercase leading-tight tracking-wide text-white drop-shadow-md sm:text-[11px]">
+                      {game.title}
+                    </p>
+                    <p className="mt-1 text-center text-[8px] font-medium uppercase tracking-wider text-white/80 sm:text-[9px]">
+                      {game.providerLabel}
+                    </p>
+                  </div>
+                </>
+              )}
             </Link>
           ))}
         </div>

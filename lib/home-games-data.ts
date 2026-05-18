@@ -27,6 +27,7 @@ export type PopularGame = {
   gradient: string;
   glow: string;
   emoji: string;
+  image: string;
 };
 
 export const popularGames: PopularGame[] = [
@@ -36,6 +37,7 @@ export const popularGames: PopularGame[] = [
     gradient: "from-[#c62828] via-[#8b1010] to-[#3d0808]",
     glow: "#ff5252",
     emoji: "✈️",
+    image: "https://img.b112j.com/bj/h5/assets/images/exclusivegames/default/exclusive-aviator.png?v=1778752753270&source=drccdnsrc",
   },
   {
     id: "superAcePlus",
@@ -43,6 +45,7 @@ export const popularGames: PopularGame[] = [
     gradient: "from-[#f59e0b] via-[#d97706] to-[#92400e]",
     glow: "#fbbf24",
     emoji: "🃏",
+    image: "https://img.b112j.com/bj/h5/assets/images/exclusivegames/default/exclusive-bj-super-ace-plus.png?v=1778752753270&source=drccdnsrc",
   },
   {
     id: "treasuresAztec",
@@ -50,6 +53,7 @@ export const popularGames: PopularGame[] = [
     gradient: "from-[#166534] via-[#14532d] to-[#052e16]",
     glow: "#4ade80",
     emoji: "🗿",
+    image: "https://img.b112j.com/bj/h5/assets/images/exclusivegames/default/exclusive-treasures-of-aztec.png?v=1778752753270&source=drccdnsrc",
   },
   {
     id: "fortuneGems",
@@ -57,6 +61,7 @@ export const popularGames: PopularGame[] = [
     gradient: "from-[#ca8a04] via-[#a16207] to-[#713f12]",
     glow: "#fde047",
     emoji: "💎",
+    image: "https://img.b112j.com/bj/h5/assets/images/exclusivegames/default/exclusive-fortune-gems-500.png?v=1778752753270&source=drccdnsrc",
   },
   {
     id: "fortuneGaruda",
@@ -64,6 +69,7 @@ export const popularGames: PopularGame[] = [
     gradient: "from-[#b45309] via-[#92400e] to-[#451a03]",
     glow: "#fbbf24",
     emoji: "🦅",
+    image: "https://img.b112j.com/bj/h5/assets/images/exclusivegames/default/exclusive-fortune-garuda-500.png?v=1778752753270&source=drccdnsrc",
   },
   {
     id: "fortuneRabbit",
@@ -71,6 +77,7 @@ export const popularGames: PopularGame[] = [
     gradient: "from-[#7c3aed] via-[#5b21b6] to-[#2e1065]",
     glow: "#c084fc",
     emoji: "🐰",
+    image: "https://img.b112j.com/bj/h5/assets/images/exclusivegames/default/exclusive-fortune-rabbit.png?v=1778752753270&source=drccdnsrc",
   },
   {
     id: "bjMoneyWheel",
@@ -78,6 +85,7 @@ export const popularGames: PopularGame[] = [
     gradient: "from-[#eab308] via-[#ca8a04] to-[#854d0e]",
     glow: "#fde047",
     emoji: "🎡",
+    image: "https://img.b112j.com/bj/h5/assets/images/exclusivegames/default/exclusive-money-wheel.png?v=1778752753270&source=drccdnsrc",
   },
   {
     id: "boxingKing",
@@ -85,6 +93,7 @@ export const popularGames: PopularGame[] = [
     gradient: "from-[#dc2626] via-[#b91c1c] to-[#7f1d1d]",
     glow: "#f87171",
     emoji: "🥊",
+    image: "https://img.b112j.com/bj/h5/assets/images/exclusivegames/default/exclusive-boxing-king.png?v=1778752753270&source=drccdnsrc",
   },
 ];
 

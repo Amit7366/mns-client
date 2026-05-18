@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import {
   categoryProviders,
   homeTabIds,
@@ -41,48 +42,43 @@ function tabIconFor(id: HomeTabId) {
   return menuIconFor(id);
 }
 
+function BjMark() {
+  return (
+    <span className="text-[8px] font-bold leading-none drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] lg:text-[11px]">
+      <span className="text-white">b</span>
+      <span className="text-[#ed1c24]">j</span>
+    </span>
+  );
+}
+
 function PopularGameCard({
   title,
   provider,
-  gradient,
-  glow,
-  emoji,
+  image,
+  priority,
 }: {
   title: string;
   provider: string;
-  gradient: string;
-  glow: string;
-  emoji: string;
+  image: string;
+  priority?: boolean;
 }) {
   return (
     <a
       href="#"
-      className="group relative w-[96px] shrink-0 snap-start sm:w-[108px] lg:w-[120px]"
+      className="group relative block w-full overflow-hidden rounded-md bg-[#141414] shadow-[0_2px_10px_rgba(0,0,0,0.35)] transition-transform duration-200 active:scale-[0.98] lg:rounded-[10px] lg:shadow-[0_4px_16px_rgba(0,0,0,0.35)] lg:active:scale-100 lg:hover:scale-[1.02]"
     >
-      <div
-        className={`relative aspect-[2/3] overflow-hidden rounded-md bg-gradient-to-b ${gradient} shadow-[0_8px_24px_rgba(0,0,0,0.45)] transition-transform duration-200 group-hover:scale-[1.03]`}
-      >
-        <div
-          className="absolute inset-0 opacity-30"
-          style={{
-            background: `radial-gradient(circle at 50% 30%, ${glow}, transparent 65%)`,
-          }}
+      <div className="relative aspect-[3/4] w-full">
+        <Image
+          src={image}
+          alt={`${title} — ${provider}`}
+          fill
+          priority={priority}
+          sizes="(max-width: 1023px) 33vw, 12.5vw"
+          className="object-cover object-center"
         />
-        <span className="absolute right-1.5 top-1.5 text-[10px] font-bold">
-          <span className="text-white">ba</span>
-          <span className="text-[#ed1c24]">ji</span>
+        <span className="absolute right-1 top-1 z-[2] lg:right-2 lg:top-2">
+          <BjMark />
         </span>
-        <div className="absolute inset-x-0 top-[28%] flex justify-center text-4xl drop-shadow-lg">
-          {emoji}
-        </div>
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/50 to-transparent px-2 pb-2.5 pt-10">
-          <p className="text-center text-[11px] font-extrabold uppercase leading-tight tracking-wide text-white drop-shadow-sm sm:text-xs">
-            {title}
-          </p>
-          <p className="mt-1 text-center text-[9px] font-medium uppercase tracking-wider text-white/75">
-            {provider}
-          </p>
-        </div>
       </div>
     </a>
   );
@@ -151,19 +147,18 @@ export default function HomeGameTabs() {
 
       {activeTab === "popular" ? (
         <div>
-          <div className="flex gap-2 overflow-x-auto pb-4 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-2.5">
-            {popularGames.map((game) => (
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2 lg:grid-cols-8 lg:gap-2.5">
+            {popularGames.map((game, index) => (
               <PopularGameCard
                 key={game.id}
                 title={t.home.games[game.id] ?? game.id}
                 provider={t.home.providers[game.providerKey] ?? game.providerKey}
-                gradient={game.gradient}
-                glow={game.glow}
-                emoji={game.emoji}
+                image={game.image}
+                priority={index < 4}
               />
             ))}
           </div>
-          <div className="flex justify-center">
+          <div className="mt-4 flex justify-center sm:mt-5">
             <Link
               href={lobbyCategoryHref(preferences.locale, "slot")}
               className="focus-ring inline-flex min-h-11 items-center rounded-md bg-[#178358] px-10 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#1a9664]"

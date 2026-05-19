@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { DEFAULT_PREFERENCES, isValidLocale } from "@/lib/locale";
 import { readPreferencesFromCookie } from "@/lib/locale-storage";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (pathname === "/") {

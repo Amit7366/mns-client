@@ -9,6 +9,7 @@ import {
   sidebarSecondaryItems,
 } from "./sidebar-menu";
 import { ExternalLinkIcon, LiveSupportIcon, SubItemIcon, menuIconFor } from "./SidebarIcons";
+import { sidebarItemHref } from "@/lib/sidebar-routes";
 import { useLocale } from "./LocaleProvider";
 
 type SideNavigationProps = {
@@ -80,11 +81,20 @@ function MenuRow({ item, expandedId, onToggleItem }: MenuRowProps) {
   );
 
   if (kind === "link") {
+    const href = sidebarItemHref(preferences.locale, item.id);
+    const rowClass =
+      "flex w-full items-center gap-3 px-3 py-[13px] text-left transition-opacity hover:opacity-90";
+    if (href) {
+      return (
+        <Link href={href} className={rowClass}>
+          {icon}
+          <span className="min-w-0 flex-1 text-[14px] font-normal leading-snug text-[#c8c8c8]">{label}</span>
+          <span className="w-4 shrink-0" />
+        </Link>
+      );
+    }
     return (
-      <a
-        href="#"
-        className="flex w-full items-center gap-3 px-3 py-[13px] text-left transition-opacity hover:opacity-90"
-      >
+      <a href="#" className={rowClass}>
         {icon}
         <span className="min-w-0 flex-1 text-[14px] font-normal leading-snug text-[#c8c8c8]">{label}</span>
         <span className="w-4 shrink-0" />
@@ -168,7 +178,7 @@ export default function SideNavigation({
   onItemClick,
   onExpand,
 }: SideNavigationProps) {
-  const { t } = useLocale();
+  const { t, preferences } = useLocale();
 
   return (
     <aside
@@ -220,17 +230,30 @@ export default function SideNavigation({
           </div>
         ) : (
           <div className="flex flex-col items-center gap-0.5 px-1 py-1">
-            {sidebarMenuItems.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                aria-label={t.sidebar[item.id] ?? item.id}
-                onClick={() => onItemClick(item.id)}
-                className="focus-ring flex h-11 w-11 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-[#262626]"
-              >
-                {menuIconFor(item.id)}
-              </button>
-            ))}
+            {sidebarMenuItems.map((item) => {
+              const href = sidebarItemHref(preferences.locale, item.id);
+              const label = t.sidebar[item.id] ?? item.id;
+              const railClass =
+                "focus-ring flex h-11 w-11 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-[#262626]";
+              if (href && item.kind === "link") {
+                return (
+                  <Link key={item.id} href={href} aria-label={label} className={railClass}>
+                    {menuIconFor(item.id)}
+                  </Link>
+                );
+              }
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  aria-label={label}
+                  onClick={() => onItemClick(item.id)}
+                  className={railClass}
+                >
+                  {menuIconFor(item.id)}
+                </button>
+              );
+            })}
           </div>
         )}
       </nav>

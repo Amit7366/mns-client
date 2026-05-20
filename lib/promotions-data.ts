@@ -53,7 +53,7 @@ export const promotions: PromotionItem[] = [
     highlightKey: "freeSpins100",
     validityStart: "2026/03/23 00:00:00",
     validityEnd: "2026/12/31 23:59:59",
-    image: U("photo-1596838138485-dfb367046420"),
+    image: U("photo-1511512578047-dfb367046420"),
   },
   {
     id: "cricket-quest",
@@ -64,7 +64,7 @@ export const promotions: PromotionItem[] = [
     highlightKey: "crore66",
     validityStart: "2026/01/01 00:00:00",
     validityEnd: "2026/12/31 23:59:59",
-    image: U("photo-1531415074969-3363381e2eb2"),
+    image: U("photo-1511512578047-dfb367046420"),
   },
   {
     id: "play-free-1000",

@@ -1,13 +1,11 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { memberSectionHref } from "@/lib/member-routes";
-import { getProfileMessages, PROFILE_MENU_ITEMS } from "@/lib/i18n/profile-messages";
-import { MOCK_PROFILE_USER } from "@/lib/profile-user";
+import { getProfileMessages } from "@/lib/i18n/profile-messages";
 import { useLocale } from "@/components/LocaleProvider";
-import { ChevronRight, CopyIcon, ProfileMenuIcon, ProfileNavIcon } from "./ProfileMenuIcons";
+import ProfileMenuPanel from "./ProfileMenuPanel";
+import { ProfileNavIcon } from "./ProfileMenuIcons";
 
 const HOVER_CLOSE_DELAY_MS = 180;
 
@@ -16,12 +14,9 @@ export default function ProfileDropdown() {
   const locale = preferences.locale;
   const p = getProfileMessages(locale);
   const pathname = usePathname();
-  const router = useRouter();
-  const base = `/${locale}`;
-  const memberBase = `${base}/member`;
+  const memberBase = `/${locale}/member`;
 
   const [open, setOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -48,16 +43,6 @@ export default function ProfileDropdown() {
   const handleLeave = useCallback(() => {
     scheduleClose();
   }, [scheduleClose]);
-
-  const copyUsername = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(MOCK_PROFILE_USER.username);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
-    } catch {
-      /* ignore */
-    }
-  }, []);
 
   useEffect(() => {
     return () => clearCloseTimer();
@@ -112,64 +97,7 @@ export default function ProfileDropdown() {
         onMouseLeave={handleLeave}
       >
         <div className="overflow-hidden rounded-lg border border-[#333] bg-[#1e1e1e] shadow-[0_16px_48px_rgba(0,0,0,0.55)]">
-          <div className="border-b border-[#2a2a2a] bg-[#252525] px-4 py-3.5">
-            <div className="flex gap-3">
-              <div
-                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#22c55e] to-[#0d3d24]"
-                aria-hidden
-              >
-                <ProfileNavIcon />
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="text-[11px] text-[#9ca3af]">{p.usernameLabel}</p>
-                <div className="mt-0.5 flex items-center gap-2">
-                  <span className="truncate text-[15px] font-bold text-white">
-                    {MOCK_PROFILE_USER.username}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={copyUsername}
-                    aria-label={copied ? p.copied : p.copyUsername}
-                    className="focus-ring shrink-0 rounded p-1 text-[#d4d4d4] transition-colors hover:bg-white/10 hover:text-white"
-                  >
-                    <CopyIcon />
-                  </button>
-                </div>
-                <p className="mt-1 text-[11px] text-[#9ca3af]">
-                  {p.signUpDateLabel} : {MOCK_PROFILE_USER.signUpDate}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <ul className="py-1">
-            {PROFILE_MENU_ITEMS.map(({ id, icon }) => (
-              <li key={id}>
-                <Link
-                  href={memberSectionHref(locale, id)}
-                  className="focus-ring flex items-center gap-3 px-4 py-2.5 text-[13px] text-white transition-colors hover:bg-[#2a2a2a]"
-                  onClick={() => setOpen(false)}
-                >
-                  <ProfileMenuIcon name={icon} />
-                  <span className="min-w-0 flex-1">{p.menu[id]}</span>
-                  <ChevronRight />
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          <div className="border-t border-[#2a2a2a] p-3">
-            <button
-              type="button"
-              onClick={() => {
-                setOpen(false);
-                router.push(`${base}/login`);
-              }}
-              className="focus-ring w-full rounded-md border border-[#444] py-2.5 text-[13px] font-medium text-white transition-colors hover:border-[#666] hover:bg-[#2a2a2a]"
-            >
-              {p.logout}
-            </button>
-          </div>
+          <ProfileMenuPanel onClose={() => setOpen(false)} />
         </div>
       </div>
     </div>

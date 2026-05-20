@@ -41,6 +41,15 @@
   }
 }
 
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
 @keyframes otp-shake {
   0%,
   100% {
@@ -122,11 +131,16 @@
   animation: otp-shake 0.45s ease-in-out;
 }
 
+.animate-slide-up {
+  animation: slide-up 0.25s ease-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-float-slow,
   .animate-float-medium,
   .animate-float-fast,
-  .animate-otp-shake {
+  .animate-otp-shake,
+  .animate-slide-up {
     animation: none;
   }
 

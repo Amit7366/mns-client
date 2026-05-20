@@ -1,3 +1,19 @@
+/** Bottom nav size (28×28) */
+export function BottomProfileNavIcon() {
+  return (
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden>
+      <circle cx="14" cy="14" r="12" fill="#3d2e0a" stroke="#f5c518" strokeWidth="1.2" />
+      <circle cx="14" cy="10.5" r="4" fill="#f5c518" />
+      <path
+        d="M7 22c1.4-3.2 3.8-4.8 7-4.8s5.6 1.6 7 4.8"
+        stroke="#f5c518"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 export function ProfileNavIcon() {
   return (
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>

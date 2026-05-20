@@ -3,6 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { lobbyCategoryHref } from "@/lib/vendor-routes";
+import { getProfileMessages } from "@/lib/i18n/profile-messages";
+import { BottomProfileNavIcon } from "./profile/ProfileMenuIcons";
+import ProfileMobileSheet from "./profile/ProfileMobileSheet";
 import { CasinoSpadeIcon, Slots777Icon } from "./SidebarIcons";
 import { useLocale } from "./LocaleProvider";
 
@@ -50,6 +53,9 @@ function BottomGiftIcon() {
 type MobileBottomNavProps = {
   onMenuClick: () => void;
   menuOpen?: boolean;
+  profileOpen?: boolean;
+  onProfileClick: () => void;
+  onProfileClose: () => void;
 };
 
 type NavItemProps = {
@@ -62,14 +68,22 @@ type NavItemProps = {
 };
 
 function NavItem({ active, label, icon, onClick, href, ariaExpanded }: NavItemProps) {
-  const className = `focus-ring flex min-h-[56px] flex-1 flex-col items-center justify-center gap-0.5 px-1 py-1.5 transition-colors ${
+  const className = `focus-ring relative flex min-h-[56px] flex-1 flex-col items-center justify-center gap-0.5 px-0.5 py-1.5 transition-colors ${
     active ? "text-white" : "text-[#a3a3a3] hover:text-[#d4d4d4]"
   }`;
 
   const content = (
     <>
+      {active ? (
+        <span
+          className="absolute inset-x-1 top-0 h-0.5 rounded-full bg-[#178358] lg:hidden"
+          aria-hidden
+        />
+      ) : null}
       <span className="flex h-7 w-7 items-center justify-center">{icon}</span>
-      <span className="max-w-full truncate text-[11px] font-medium leading-tight">{label}</span>
+      <span className="max-w-full truncate text-[10px] font-medium leading-tight sm:text-[11px]">
+        {label}
+      </span>
     </>
   );
 
@@ -94,49 +108,69 @@ function NavItem({ active, label, icon, onClick, href, ariaExpanded }: NavItemPr
   );
 }
 
-export default function MobileBottomNav({ onMenuClick, menuOpen }: MobileBottomNavProps) {
+export default function MobileBottomNav({
+  onMenuClick,
+  menuOpen,
+  profileOpen,
+  onProfileClick,
+  onProfileClose,
+}: MobileBottomNavProps) {
   const { preferences, t } = useLocale();
   const pathname = usePathname();
   const locale = preferences.locale;
   const base = `/${locale}`;
+  const p = getProfileMessages(locale);
 
   const isCasino = pathname === `${base}/casino` || pathname.startsWith(`${base}/casino?`);
   const isSlot = pathname === `${base}/slot` || pathname.startsWith(`${base}/slot?`);
   const isPromotion =
     pathname === `${base}/promotion` || pathname.startsWith(`${base}/promotion?`);
+  const isMember = pathname === `${base}/member` || pathname.startsWith(`${base}/member/`);
+  const isProfileActive = profileOpen || isMember;
 
   return (
-    <nav
-      className="fixed bottom-0 left-0 right-0 z-40 border-t border-[#2a2a2a] bg-[#1a1a1a] pb-[env(safe-area-inset-bottom)] lg:hidden"
-      aria-label={t.ui.bottomNavigation}
-    >
-      <div className="mx-auto flex w-full max-w-lg items-stretch">
-        <NavItem
-          active={!!menuOpen}
-          label={t.ui.menu}
-          icon={<BottomMenuIcon />}
-          onClick={onMenuClick}
-          ariaExpanded={menuOpen}
-        />
-        <NavItem
-          active={isCasino}
-          label={t.casino}
-          icon={<CasinoSpadeIcon />}
-          href={lobbyCategoryHref(locale, "casino")}
-        />
-        <NavItem
-          active={isSlot}
-          label={t.slots}
-          icon={<Slots777Icon />}
-          href={lobbyCategoryHref(locale, "slot")}
-        />
-        <NavItem
-          active={isPromotion}
-          label={t.promotions}
-          icon={<BottomGiftIcon />}
-          href={`${base}/promotion`}
-        />
-      </div>
-    </nav>
+    <>
+      <nav
+        className="fixed bottom-0 left-0 right-0 z-40 border-t border-[#2a2a2a] bg-[#1a1a1a] pb-[env(safe-area-inset-bottom)] lg:hidden"
+        aria-label={t.ui.bottomNavigation}
+      >
+        <div className="mx-auto flex w-full max-w-lg items-stretch">
+          <NavItem
+            active={!!menuOpen}
+            label={t.ui.menu}
+            icon={<BottomMenuIcon />}
+            onClick={onMenuClick}
+            ariaExpanded={menuOpen}
+          />
+          <NavItem
+            active={isCasino}
+            label={t.casino}
+            icon={<CasinoSpadeIcon />}
+            href={lobbyCategoryHref(locale, "casino")}
+          />
+          <NavItem
+            active={isSlot}
+            label={t.slots}
+            icon={<Slots777Icon />}
+            href={lobbyCategoryHref(locale, "slot")}
+          />
+          <NavItem
+            active={isPromotion}
+            label={t.promotions}
+            icon={<BottomGiftIcon />}
+            href={`${base}/promotion`}
+          />
+          <NavItem
+            active={isProfileActive}
+            label={p.navLabel}
+            icon={<BottomProfileNavIcon />}
+            onClick={onProfileClick}
+            ariaExpanded={profileOpen}
+          />
+        </div>
+      </nav>
+
+      <ProfileMobileSheet open={!!profileOpen} onClose={onProfileClose} />
+    </>
   );
 }

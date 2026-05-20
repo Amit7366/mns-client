@@ -14,6 +14,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const { t } = useLocale();
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [profileSheetOpen, setProfileSheetOpen] = useState(false);
 
   const toggleSidebar = useCallback(() => {
     setSidebarExpanded((open) => !open);
@@ -34,7 +35,17 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setSidebarExpanded(false);
+    setProfileSheetOpen(false);
   }, [pathname]);
+
+  const handleProfileClick = useCallback(() => {
+    setSidebarExpanded(false);
+    setProfileSheetOpen((open) => !open);
+  }, []);
+
+  const handleProfileClose = useCallback(() => {
+    setProfileSheetOpen(false);
+  }, []);
 
   return (
     <div className="flex h-full min-h-0 flex-1 flex-col overflow-hidden bg-[#0a0a0a]">
@@ -64,7 +75,13 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         </main>
       </div>
 
-      <MobileBottomNav onMenuClick={toggleSidebar} menuOpen={sidebarExpanded} />
+      <MobileBottomNav
+        onMenuClick={toggleSidebar}
+        menuOpen={sidebarExpanded}
+        profileOpen={profileSheetOpen}
+        onProfileClick={handleProfileClick}
+        onProfileClose={handleProfileClose}
+      />
       <CurrencyLanguageModal />
     </div>
   );

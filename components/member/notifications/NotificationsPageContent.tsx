@@ -6,12 +6,14 @@ import {
   memberBtnDanger,
   memberBtnGhost,
   memberBtnSecondary,
-  memberContainerWide,
+  memberContainerXl,
   MEMBER_PAGE_BG,
+  memberPagePadding,
   MemberEmptyState,
   MemberPageHeader,
 } from "@/components/member/shared/member-ui";
 import { getNotificationMessages } from "@/lib/i18n/notification-messages";
+import { getProfileMessages } from "@/lib/i18n/profile-messages";
 import { INITIAL_NOTIFICATIONS, type NotificationRecord } from "@/lib/notifications-data";
 import { useLocale } from "@/components/LocaleProvider";
 
@@ -194,8 +196,11 @@ export default function NotificationsPageContent() {
   return (
     <div className={MEMBER_PAGE_BG}>
       <MemberPageHeader
-        wide
+        width="xl"
         title={n.pageTitle}
+        backHref={base}
+        backLabel={getProfileMessages(preferences.locale).navLabel}
+        stackTrailing={editMode}
         trailing={
           editMode ? (
             <EditToolbar
@@ -227,7 +232,7 @@ export default function NotificationsPageContent() {
         }
       />
 
-      <div className={`${memberContainerWide} py-4 sm:py-5`}>
+      <div className={`${memberContainerXl} ${memberPagePadding}`}>
         {items.length === 0 ? (
           <MemberEmptyState message={n.empty} />
         ) : (

@@ -12,7 +12,12 @@ import {
 } from "@/lib/member-personal-routes";
 import { memberSectionHref } from "@/lib/member-routes";
 import { useLocale } from "@/components/LocaleProvider";
-import { memberBtnPrimary, memberContainerNarrow } from "@/components/member/shared/member-ui";
+import {
+  memberBtnPrimary,
+  memberContainerNarrow,
+  MEMBER_PAGE_BG,
+  memberPagePaddingNarrow,
+} from "@/components/member/shared/member-ui";
 import MemberPersonalHeader from "./MemberPersonalHeader";
 import OtpCodeInput from "./OtpCodeInput";
 
@@ -84,10 +89,10 @@ export default function VerifyCodePageContent({ kind }: { kind: VerifyKind }) {
   const subtitle = kind === "phone" ? p.verify.phoneSubtitle : p.verify.emailSubtitle;
 
   return (
-    <div className="min-h-full bg-[#0a0a0a]">
+    <div className={MEMBER_PAGE_BG}>
       <MemberPersonalHeader title={title} backHref={backHref} backLabel={p.back} />
 
-      <form onSubmit={handleSubmit} className={`${memberContainerNarrow} py-6 sm:py-8`}>
+      <form onSubmit={handleSubmit} className={`${memberContainerNarrow} ${memberPagePaddingNarrow}`}>
         <p className="text-center text-[13px] leading-relaxed text-[#9ca3af] sm:text-[14px]">
           {subtitle}
         </p>

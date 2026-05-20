@@ -7,7 +7,12 @@ import { getPersonalInfoMessages } from "@/lib/i18n/personal-info-messages";
 import { emailVerifyHref, PENDING_EMAIL_KEY } from "@/lib/member-personal-routes";
 import { memberSectionHref } from "@/lib/member-routes";
 import { useLocale } from "@/components/LocaleProvider";
-import { memberBtnPrimary, memberContainerNarrow } from "@/components/member/shared/member-ui";
+import {
+  memberBtnPrimary,
+  memberContainerNarrow,
+  MEMBER_PAGE_BG,
+  memberPagePaddingNarrow,
+} from "@/components/member/shared/member-ui";
 import EmailHeroIcon from "./EmailHeroIcon";
 import MemberPersonalHeader from "./MemberPersonalHeader";
 
@@ -24,10 +29,10 @@ export default function EmailPageContent() {
   const backHref = memberSectionHref(locale, "personal-info");
 
   return (
-    <div className="min-h-full bg-[#0a0a0a]">
+    <div className={MEMBER_PAGE_BG}>
       <MemberPersonalHeader title={p.email.pageTitle} backHref={backHref} backLabel={p.back} />
 
-      <div className={`${memberContainerNarrow} py-6 sm:py-8`}>
+      <div className={`${memberContainerNarrow} ${memberPagePaddingNarrow}`}>
         <EmailHeroIcon />
 
         <h2 className="mt-6 text-center text-[20px] font-bold text-white sm:text-[22px]">

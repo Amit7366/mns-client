@@ -7,6 +7,7 @@ import {
   memberBtnPrimary,
   memberContainerNarrow,
   MEMBER_PAGE_BG,
+  memberPagePaddingNarrow,
   MemberFieldLabel,
   MemberPageHeader,
 } from "@/components/member/shared/member-ui";
@@ -80,7 +81,7 @@ export default function ChangePasswordPageContent() {
         backLabel={c.back}
       />
 
-      <form onSubmit={handleSubmit} className={`${memberContainerNarrow} py-5 sm:py-6`}>
+      <form onSubmit={handleSubmit} className={`${memberContainerNarrow} ${memberPagePaddingNarrow}`}>
         <div className="space-y-5">
           <label className="block">
             <MemberFieldLabel>{c.currentPassword}</MemberFieldLabel>

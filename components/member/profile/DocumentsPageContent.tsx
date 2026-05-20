@@ -17,6 +17,7 @@ import {
   memberBtnPrimary,
   memberContainerNarrow,
   MEMBER_PAGE_BG,
+  memberPagePaddingFormSticky,
   MemberFieldLabel,
   MemberPageHeader,
   MemberStickyFooter,
@@ -148,14 +149,14 @@ export default function DocumentsPageContent() {
   }
 
   return (
-    <div className={`${MEMBER_PAGE_BG} pb-28`}>
+    <div className={MEMBER_PAGE_BG}>
       <MemberPageHeader
         title={d.pageTitle}
         backHref={memberSectionHref(locale, "verification")}
         backLabel={d.back}
       />
 
-      <form onSubmit={handleSubmit} className={`${memberContainerNarrow} py-5 sm:py-6`}>
+      <form onSubmit={handleSubmit} className={`${memberContainerNarrow} ${memberPagePaddingFormSticky}`}>
         <div className="space-y-5">
           <label className="block">
             <MemberFieldLabel>{d.documentTypeLabel}</MemberFieldLabel>

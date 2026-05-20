@@ -18,7 +18,14 @@ import {
   type ProfileTabId,
 } from "@/lib/member-profile-tabs";
 import { MOCK_PROFILE_USER } from "@/lib/profile-user";
-import { memberContainerProfile, MEMBER_PAGE_BG, memberPanelBorder } from "@/components/member/shared/member-ui";
+import {
+  memberContainerProfile,
+  MEMBER_PAGE_BG,
+  memberPagePadding,
+  memberPanelBorder,
+  MemberPageHeader,
+} from "@/components/member/shared/member-ui";
+import { getProfileMessages } from "@/lib/i18n/profile-messages";
 import { useLocale } from "@/components/LocaleProvider";
 
 function ChevronRight() {
@@ -138,6 +145,7 @@ export default function MemberProfilePage({ activeTab }: MemberProfilePageProps)
   const { preferences } = useLocale();
   const locale = preferences.locale;
   const m = getMemberProfileMessages(locale);
+  const profileNav = getProfileMessages(locale);
   const router = useRouter();
   const [copied, setCopied] = useState(false);
 
@@ -153,22 +161,27 @@ export default function MemberProfilePage({ activeTab }: MemberProfilePageProps)
 
   return (
     <div className={MEMBER_PAGE_BG}>
-      <div className={`${memberContainerProfile} py-5 sm:py-6`}>
-        <h1 className="text-[20px] font-bold text-white sm:text-[24px]">{m.pageTitle}</h1>
+      <MemberPageHeader
+        title={m.pageTitle}
+        backHref={`/${locale}`}
+        backLabel={profileNav.navLabel}
+        width="profile"
+      />
 
-        <div className="mt-5 flex flex-col gap-4 lg:flex-row lg:gap-5">
+      <div className={`${memberContainerProfile} ${memberPagePadding}`}>
+        <div className="flex flex-col gap-4 lg:flex-row lg:gap-5">
           <nav
             className={`shrink-0 overflow-hidden ${memberPanelBorder} lg:w-[220px] xl:w-[240px]`}
             aria-label={m.pageTitle}
           >
-            <ul className="flex lg:flex-col">
+            <ul className="flex overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:flex-col lg:overflow-visible">
               {PROFILE_TABS.map((tabId) => {
                 const isActive = tabId === activeTab;
                 return (
-                  <li key={tabId} className="min-w-0 flex-1 lg:flex-none">
+                  <li key={tabId} className="min-w-0 shrink-0 flex-1 lg:flex-none">
                     <Link
                       href={memberSectionHref(locale, tabId)}
-                      className={`focus-ring block whitespace-nowrap px-3 py-3.5 text-center text-[12px] transition-colors sm:px-4 sm:text-[13px] lg:text-left lg:text-[14px] ${
+                      className={`focus-ring relative block whitespace-nowrap px-4 py-3.5 text-center text-[12px] transition-colors sm:text-[13px] lg:px-4 lg:text-left lg:text-[14px] ${
                         isActive
                           ? "bg-[#2a2a2a] font-medium text-white"
                           : "text-[#d4d4d4] hover:bg-[#1a1a1a] hover:text-white"
@@ -176,6 +189,12 @@ export default function MemberProfilePage({ activeTab }: MemberProfilePageProps)
                       aria-current={isActive ? "page" : undefined}
                     >
                       {m.tabs[tabId]}
+                      {isActive ? (
+                        <span
+                          className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#178358] lg:hidden"
+                          aria-hidden
+                        />
+                      ) : null}
                     </Link>
                   </li>
                 );

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import type { Messages } from "@/lib/i18n/messages";
 import { LOBBY_GAME_TYPE_IDS, type LobbyGameTypeId } from "@/lib/lobby-game-types";
 import { LOBBY_GAMES_PAGE_SIZE } from "@/lib/lobby-pagination";
@@ -187,6 +188,7 @@ export default function VendorGamesLobby({ locale, kind, vendors, activeTypes, g
   const [sortMenuOpen, setSortMenuOpen] = useState(false);
   const [sortMode, setSortMode] = useState<LobbySortMode>("recommend");
   const [filterOpen, setFilterOpen] = useState(false);
+  const [filterPortalReady, setFilterPortalReady] = useState(false);
   const [providersOpen, setProvidersOpen] = useState(true);
   const [gameTypesOpen, setGameTypesOpen] = useState(true);
   const [draftVendors, setDraftVendors] = useState<Set<string>>(() => new Set(vendors));
@@ -218,10 +220,23 @@ export default function VendorGamesLobby({ locale, kind, vendors, activeTypes, g
   };
 
   useEffect(() => {
+    setFilterPortalReady(true);
+  }, []);
+
+  useEffect(() => {
     if (!filterOpen) return;
     setDraftVendors(isAllLobbyVendors(vendors) ? new Set() : new Set(vendors));
     setDraftTypes(new Set(activeTypes));
   }, [vendors, activeTypes, filterOpen]);
+
+  useEffect(() => {
+    if (!filterOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [filterOpen]);
   const sourceOrder = useMemo(() => new Map(games.map((g, i) => [g.id, i])), [games]);
 
   const filtered = useMemo(() => {
@@ -334,7 +349,7 @@ export default function VendorGamesLobby({ locale, kind, vendors, activeTypes, g
   }
 
   return (
-    <div className="min-h-full bg-[#0a0a0a] pb-8">
+    <div className="min-h-full bg-[#0a0a0a] pb-8 lg:pb-8 max-lg:pb-mobile-nav">
       <div className="border-b border-[#1f1f1f] px-3 py-3 sm:px-4 lg:px-6">
         <div className="mb-3 flex items-center justify-between">
           <div className="relative min-w-0" ref={menuWrapRef}>
@@ -576,144 +591,152 @@ export default function VendorGamesLobby({ locale, kind, vendors, activeTypes, g
         </Link>
       </div>
 
-      {filterOpen ? (
-        <div
-          className="fixed inset-0 z-[200] flex justify-end bg-black/55"
-          role="presentation"
-          onClick={() => setFilterOpen(false)}
-        >
-          <aside
-            className="flex h-full w-full max-w-md flex-col bg-[#121212] shadow-2xl"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="lobby-filter-title"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <header className="flex shrink-0 items-center justify-between border-b border-[#2a2a2a] px-4 py-3">
-              <h2 id="lobby-filter-title" className="text-lg font-bold text-white">
-                {t.lobby.filterPanelTitle}
-              </h2>
-              <button
-                type="button"
-                className="rounded-md p-2 hover:bg-white/10"
-                aria-label={t.lobby.filterClose}
-                onClick={() => setFilterOpen(false)}
+      {filterPortalReady && filterOpen
+        ? createPortal(
+            <div
+              className="fixed inset-0 z-[60] flex flex-col justify-end bg-black/55 lg:flex-row lg:justify-end"
+              role="presentation"
+              onClick={() => setFilterOpen(false)}
+            >
+              <aside
+                className="flex max-h-[min(92dvh,100dvh)] w-full flex-col rounded-t-2xl bg-[#121212] shadow-2xl lg:h-full lg:max-h-none lg:max-w-md lg:rounded-none"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="lobby-filter-title"
+                onClick={(e) => e.stopPropagation()}
               >
-                <CloseIcon />
-              </button>
-            </header>
+                <div className="flex shrink-0 justify-center pt-2.5 lg:hidden" aria-hidden>
+                  <span className="h-1 w-10 rounded-full bg-[#555]" />
+                </div>
 
-            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 pb-4">
-              <div className="border-b border-[#2a2a2a]">
-                <button
-                  type="button"
-                  className="flex w-full items-center justify-between px-2 py-3 text-left"
-                  onClick={() => setProvidersOpen((o) => !o)}
-                  aria-expanded={providersOpen}
-                >
-                  <span className="text-[15px] font-semibold text-white">{t.lobby.filterProviders}</span>
-                  <AccordionChevron open={providersOpen} />
-                </button>
-                {providersOpen ? (
-                  <ul className="pb-2 pl-1">
-                    {providerRows.map((row) => {
-                      const name = t.home.providers[row.labelKey as keyof typeof t.home.providers] ?? row.labelKey;
-                      const checked = draftVendors.has(row.vendorCode);
-                      return (
-                        <li key={row.vendorCode}>
-                          <label className="flex cursor-pointer items-center gap-3 rounded-md px-2 py-2.5 hover:bg-white/[0.04]">
-                            <span className="relative flex h-6 w-6 shrink-0 items-center justify-center rounded border border-[#404040] bg-[#1a1a1a]">
-                              <input
-                                type="checkbox"
-                                className="peer sr-only"
-                                checked={checked}
-                                onChange={() => {
-                                  setDraftVendors((prev) => {
-                                    const n = new Set(prev);
-                                    if (n.has(row.vendorCode)) n.delete(row.vendorCode);
-                                    else n.add(row.vendorCode);
-                                    return n;
-                                  });
-                                }}
-                              />
-                              <span className="pointer-events-none hidden text-[11px] font-bold text-emerald-500 peer-checked:block">
-                                ✓
-                              </span>
-                            </span>
-                            <ProviderFilterAvatar label={name} />
-                            <span className="truncate text-[14px] text-[#b3b3b3]">{name}</span>
-                          </label>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                ) : null}
-              </div>
+                <header className="flex shrink-0 items-center justify-between border-b border-[#2a2a2a] px-4 py-3">
+                  <h2 id="lobby-filter-title" className="text-lg font-bold text-white">
+                    {t.lobby.filterPanelTitle}
+                  </h2>
+                  <button
+                    type="button"
+                    className="focus-ring rounded-md p-2 hover:bg-white/10"
+                    aria-label={t.lobby.filterClose}
+                    onClick={() => setFilterOpen(false)}
+                  >
+                    <CloseIcon />
+                  </button>
+                </header>
 
-              <div className="border-b border-[#2a2a2a]">
-                <button
-                  type="button"
-                  className="flex w-full items-center justify-between px-2 py-3 text-left"
-                  onClick={() => setGameTypesOpen((o) => !o)}
-                  aria-expanded={gameTypesOpen}
-                >
-                  <span className="text-[15px] font-semibold text-white">{t.lobby.filterGameType}</span>
-                  <AccordionChevron open={gameTypesOpen} />
-                </button>
-                {gameTypesOpen ? (
-                  <ul className="pb-2 pl-1">
-                    {LOBBY_GAME_TYPE_IDS.map((typeId) => {
-                      const checked = draftTypes.has(typeId);
-                      return (
-                        <li key={typeId}>
-                          <label className="flex cursor-pointer items-center gap-3 rounded-md px-2 py-2.5 hover:bg-white/[0.04]">
-                            <span className="relative flex h-6 w-6 shrink-0 items-center justify-center rounded border border-[#404040] bg-[#1a1a1a]">
-                              <input
-                                type="checkbox"
-                                className="peer sr-only"
-                                checked={checked}
-                                onChange={() => {
-                                  setDraftTypes((prev) => {
-                                    const n = new Set(prev);
-                                    if (n.has(typeId)) n.delete(typeId);
-                                    else n.add(typeId);
-                                    return n;
-                                  });
-                                }}
-                              />
-                              <span className="pointer-events-none hidden text-[11px] font-bold text-emerald-500 peer-checked:block">
-                                ✓
-                              </span>
-                            </span>
-                            <span className="truncate text-[14px] text-[#b3b3b3]">{gameTypeLabel(typeId)}</span>
-                          </label>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                ) : null}
-              </div>
-            </div>
+                <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 pb-4 [-webkit-overflow-scrolling:touch]">
+                  <div className="border-b border-[#2a2a2a]">
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between px-2 py-3 text-left"
+                      onClick={() => setProvidersOpen((o) => !o)}
+                      aria-expanded={providersOpen}
+                    >
+                      <span className="text-[15px] font-semibold text-white">{t.lobby.filterProviders}</span>
+                      <AccordionChevron open={providersOpen} />
+                    </button>
+                    {providersOpen ? (
+                      <ul className="pb-2 pl-1">
+                        {providerRows.map((row) => {
+                          const name =
+                            t.home.providers[row.labelKey as keyof typeof t.home.providers] ?? row.labelKey;
+                          const checked = draftVendors.has(row.vendorCode);
+                          return (
+                            <li key={row.vendorCode}>
+                              <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-md px-2 py-2.5 hover:bg-white/[0.04]">
+                                <span className="relative flex h-6 w-6 shrink-0 items-center justify-center rounded border border-[#404040] bg-[#1a1a1a]">
+                                  <input
+                                    type="checkbox"
+                                    className="peer sr-only"
+                                    checked={checked}
+                                    onChange={() => {
+                                      setDraftVendors((prev) => {
+                                        const n = new Set(prev);
+                                        if (n.has(row.vendorCode)) n.delete(row.vendorCode);
+                                        else n.add(row.vendorCode);
+                                        return n;
+                                      });
+                                    }}
+                                  />
+                                  <span className="pointer-events-none hidden text-[11px] font-bold text-emerald-500 peer-checked:block">
+                                    ✓
+                                  </span>
+                                </span>
+                                <ProviderFilterAvatar label={name} />
+                                <span className="truncate text-[14px] text-[#b3b3b3]">{name}</span>
+                              </label>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    ) : null}
+                  </div>
 
-            <footer className="safe-bottom flex shrink-0 gap-2 border-t border-[#2a2a2a] p-3">
-              <button
-                type="button"
-                className="flex-1 rounded-md border border-[#3f3f3f] py-3 text-[14px] font-semibold text-[#d4d4d4] transition-colors hover:bg-white/[0.06]"
-                onClick={clearFilterDraft}
-              >
-                {t.lobby.filterClearAll}
-              </button>
-              <button
-                type="button"
-                className="flex-[1.15] rounded-md bg-[#178358] py-3 text-[14px] font-bold text-white transition-colors hover:bg-[#1a9664]"
-                onClick={applyFiltersToUrl}
-              >
-                {t.lobby.filterApply}
-              </button>
-            </footer>
-          </aside>
-        </div>
-      ) : null}
+                  <div className="border-b border-[#2a2a2a]">
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between px-2 py-3 text-left"
+                      onClick={() => setGameTypesOpen((o) => !o)}
+                      aria-expanded={gameTypesOpen}
+                    >
+                      <span className="text-[15px] font-semibold text-white">{t.lobby.filterGameType}</span>
+                      <AccordionChevron open={gameTypesOpen} />
+                    </button>
+                    {gameTypesOpen ? (
+                      <ul className="pb-2 pl-1">
+                        {LOBBY_GAME_TYPE_IDS.map((typeId) => {
+                          const checked = draftTypes.has(typeId);
+                          return (
+                            <li key={typeId}>
+                              <label className="flex min-h-11 cursor-pointer items-center gap-3 rounded-md px-2 py-2.5 hover:bg-white/[0.04]">
+                                <span className="relative flex h-6 w-6 shrink-0 items-center justify-center rounded border border-[#404040] bg-[#1a1a1a]">
+                                  <input
+                                    type="checkbox"
+                                    className="peer sr-only"
+                                    checked={checked}
+                                    onChange={() => {
+                                      setDraftTypes((prev) => {
+                                        const n = new Set(prev);
+                                        if (n.has(typeId)) n.delete(typeId);
+                                        else n.add(typeId);
+                                        return n;
+                                      });
+                                    }}
+                                  />
+                                  <span className="pointer-events-none hidden text-[11px] font-bold text-emerald-500 peer-checked:block">
+                                    ✓
+                                  </span>
+                                </span>
+                                <span className="truncate text-[14px] text-[#b3b3b3]">{gameTypeLabel(typeId)}</span>
+                              </label>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    ) : null}
+                  </div>
+                </div>
+
+                <footer className="safe-bottom flex shrink-0 gap-2 border-t border-[#2a2a2a] bg-[#121212] p-3">
+                  <button
+                    type="button"
+                    className="focus-ring min-h-11 flex-1 rounded-md border border-[#3f3f3f] py-3 text-[14px] font-semibold text-[#d4d4d4] transition-colors hover:bg-white/[0.06]"
+                    onClick={clearFilterDraft}
+                  >
+                    {t.lobby.filterClearAll}
+                  </button>
+                  <button
+                    type="button"
+                    className="focus-ring min-h-11 flex-[1.15] rounded-md bg-[#178358] py-3 text-[14px] font-bold text-white transition-colors hover:bg-[#1a9664]"
+                    onClick={applyFiltersToUrl}
+                  >
+                    {t.lobby.filterApply}
+                  </button>
+                </footer>
+              </aside>
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }

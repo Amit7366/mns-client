@@ -125,6 +125,11 @@
   .safe-bottom {
     padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
   }
+
+  /** Matches fixed `MobileBottomNav` height (3.5rem + safe area). */
+  .pb-mobile-nav {
+    padding-bottom: calc(3.5rem + env(safe-area-inset-bottom));
+  }
 }
 
 .animate-otp-shake {

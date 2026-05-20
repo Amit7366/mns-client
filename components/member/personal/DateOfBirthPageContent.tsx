@@ -6,7 +6,12 @@ import { authInputClass } from "@/components/auth/AuthField";
 import { getPersonalInfoMessages } from "@/lib/i18n/personal-info-messages";
 import { memberSectionHref } from "@/lib/member-routes";
 import { useLocale } from "@/components/LocaleProvider";
-import { memberBtnPrimary, memberContainerNarrow } from "@/components/member/shared/member-ui";
+import {
+  memberBtnPrimary,
+  memberContainerNarrow,
+  MEMBER_PAGE_BG,
+  memberPagePaddingNarrow,
+} from "@/components/member/shared/member-ui";
 import MemberPersonalHeader from "./MemberPersonalHeader";
 import PrivacyNotice from "./PrivacyNotice";
 
@@ -33,7 +38,7 @@ export default function DateOfBirthPageContent() {
   const backHref = memberSectionHref(locale, "personal-info");
 
   return (
-    <div className="min-h-full bg-[#0a0a0a]">
+    <div className={MEMBER_PAGE_BG}>
       <MemberPersonalHeader title={p.dateOfBirth.pageTitle} backHref={backHref} backLabel={p.back} />
 
       <form
@@ -47,7 +52,7 @@ export default function DateOfBirthPageContent() {
           setSubmitted(true);
           window.setTimeout(() => router.push(backHref), 600);
         }}
-        className={`${memberContainerNarrow} py-5 sm:py-6`}
+        className={`${memberContainerNarrow} ${memberPagePaddingNarrow}`}
       >
         <label className="block">
           <span className="mb-2 block text-[13px] text-[#9ca3af] sm:text-[14px]">

@@ -11,7 +11,12 @@ import {
 import { memberSectionHref } from "@/lib/member-routes";
 import { MOCK_PROFILE_USER } from "@/lib/profile-user";
 import { useLocale } from "@/components/LocaleProvider";
-import { memberBtnPrimary, memberContainerNarrow } from "@/components/member/shared/member-ui";
+import {
+  memberBtnPrimary,
+  memberContainerNarrow,
+  MEMBER_PAGE_BG,
+  memberPagePaddingNarrow,
+} from "@/components/member/shared/member-ui";
 import MemberPersonalHeader from "./MemberPersonalHeader";
 import PhoneHeroIcon from "./PhoneHeroIcon";
 
@@ -44,10 +49,10 @@ export default function PhonePageContent() {
   const backHref = memberSectionHref(locale, "personal-info");
 
   return (
-    <div className="min-h-full bg-[#0a0a0a]">
+    <div className={MEMBER_PAGE_BG}>
       <MemberPersonalHeader title={p.phone.pageTitle} backHref={backHref} backLabel={p.back} />
 
-      <div className={`${memberContainerNarrow} py-6 sm:py-8`}>
+      <div className={`${memberContainerNarrow} ${memberPagePaddingNarrow}`}>
         <PhoneHeroIcon />
 
         <h2 className="mt-6 text-center text-[20px] font-bold text-white sm:text-[22px]">

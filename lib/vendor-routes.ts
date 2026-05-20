@@ -162,3 +162,8 @@ export function isAllLobbyVendors(vendors: string[]): boolean {
 export function lobbyCategoryHref(locale: string, kind: LobbyKind): string {
   return `/${locale}/${kind}?vendor=${LOBBY_VENDOR_ALL}`;
 }
+
+export function lobbyProviderHref(locale: string, kind: LobbyKind, providerId: string): string {
+  const v = vendorCodeFor(providerId);
+  return `/${locale}/${kind}?vendor=${encodeURIComponent(v)}`;
+}

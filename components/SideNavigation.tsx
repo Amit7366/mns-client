@@ -9,7 +9,7 @@ import {
   sidebarSecondaryItems,
 } from "./sidebar-menu";
 import { ExternalLinkIcon, LiveSupportIcon, SubItemIcon, menuIconFor } from "./SidebarIcons";
-import { sidebarItemHref } from "@/lib/sidebar-routes";
+import { sidebarItemHref, sidebarSubItemHref } from "@/lib/sidebar-routes";
 import { useLocale } from "./LocaleProvider";
 
 type SideNavigationProps = {
@@ -153,16 +153,29 @@ function MenuRow({ item, expandedId, onToggleItem }: MenuRowProps) {
             <PromotionSidebarSlider />
           ) : (
             <div className="space-y-1 px-2 pb-1">
-              {item.subItems?.map((sub) => (
-                <a
-                  key={sub.id}
-                  href="#"
-                  className="flex items-center gap-3 rounded-md bg-[#242424] px-3 py-2.5 text-[13px] text-[#d8d8d8] transition-colors hover:bg-[#2e2e2e]"
-                >
-                  <SubItemIcon id={sub.id} label={t.sub[sub.id] ?? sub.id} accent={sub.accent} />
-                  <span className="truncate">{t.sub[sub.id] ?? sub.id}</span>
-                </a>
-              ))}
+              {item.subItems?.map((sub) => {
+                const href = sidebarSubItemHref(preferences.locale, item.id, sub.id);
+                const rowClass =
+                  "flex items-center gap-3 rounded-md bg-[#242424] px-3 py-2.5 text-[13px] text-[#d8d8d8] transition-colors hover:bg-[#2e2e2e]";
+                const content = (
+                  <>
+                    <SubItemIcon id={sub.id} label={t.sub[sub.id] ?? sub.id} accent={sub.accent} />
+                    <span className="truncate">{t.sub[sub.id] ?? sub.id}</span>
+                  </>
+                );
+                if (href) {
+                  return (
+                    <Link key={sub.id} href={href} className={rowClass}>
+                      {content}
+                    </Link>
+                  );
+                }
+                return (
+                  <a key={sub.id} href="#" className={rowClass}>
+                    {content}
+                  </a>
+                );
+              })}
             </div>
           )}
         </div>
@@ -235,7 +248,7 @@ export default function SideNavigation({
               const label = t.sidebar[item.id] ?? item.id;
               const railClass =
                 "focus-ring flex h-11 w-11 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-[#262626]";
-              if (href && item.kind === "link") {
+              if (href) {
                 return (
                   <Link key={item.id} href={href} aria-label={label} className={railClass}>
                     {menuIconFor(item.id)}

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { lobbyCategoryHref, type LobbyKind } from "@/lib/vendor-routes";
 import LocaleMenuButton from "./LocaleMenuButton";
+import ProfileDropdown from "./profile/ProfileDropdown";
 import { useLocale } from "./LocaleProvider";
 
 function MenuIcon() {
@@ -129,6 +130,7 @@ export default function TopNavbar({
             {navHrefs.map(({ kind, icon, label }) => (
               <NavLink key={kind} href={lobbyCategoryHref(locale, kind)} icon={icon} label={label} />
             ))}
+            <ProfileDropdown />
           </div>
         </div>
 
